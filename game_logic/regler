@@ -1,0 +1,61 @@
+Each player has 15 checkers(stones) that he needs to bring home faster than his opponent.
+The stones move on a board composed of 24 triangles(points). These are indicated from 1 to 24.
+
+BOARD
+The board is divided into 4 parts of 6 points.
+
+One player moves his stones clockwise(white), the other(black) plays counterclockwise.
+
+The movement on the dice indicates the number of points a stone is allowed to advance. 
+
+During the game, the players try to bring all their stones into their home board and to bear the off, which means taking them out of the board.
+
+BEGINNING A GAME 
+At the beginning of every game, the stones of both players are placed symmetrically on the board as follows:
+
+- 2 stones on the opponents 24th point
+- 5 stones on own 13th point
+- 3 stones on opponents 8th point
+- 5 stones on own 6th point
+
+The white stones will move clockwise to reach the top right part of the board (also called white inner board), 
+while the black steons move counter clockwise to reach the bottom right of the board (black inner board).
+
+You are not allowed to move a stone backwards.
+
+The game starts with eacher player throwing on die. The player with the highst number on his die makes the first move.
+
+The dice can be used to move the same stone or two different ones.
+
+From that point, the players are moving their stones by playing one after the other.
+
+The movement of the stones obey some rules: 
+- A stone can land or pass freely on a point with no other stone on it;
+- A player can have as many stones as he wants on a specific point;
+- If a player rolls a double, he has to play 4 times;
+- It is not possible for a stone to land, or pass on a point already occupied by 2 or more of his opponents stones;
+- A lonce stone on a point is called "a blot" and can be hit by his opponent.
+- If there is a way to play a roll it must be done even at the disadvantage of the player;
+- When a stone is hit, it is put "on the bar" and will have to start back on its opponents inner board;
+- A player cannot move any other stones as long as he has one on the bar.
+
+To re-enter in his opponent's inner board, a player has to roll a number not covered by two or more of his opponents stones. 
+You can consider every point in the inner board as a gate numbered from 1-6(white) and 19-24(black).
+
+THE END OF THE GAME
+Once all your stones are inside your inner board, the last part of the game is starting. This part is called the "bear off" and consists of taking out your stones off the board as quickly as possible.
+
+To do so, you have to take stones out according to the numbers you are rolling.
+
+Consider that your inner board is also composed of gates from 6 to 1(white).
+
+For every roll, you can take out the stone corresponding.
+
+If you have stones on every gate and you roll 1-6, it means you can take on stone out from the 6th point and one checker out from the 1st point.
+
+If you roll a 6 but don't have any more stones on this point, you can use this roll to take out a checker from the next highest point.
+
+But if you roll for example a 4 without any stones on this point and still having some on the 6th and the 5th point, 
+you cannot use this roll to bear off a checker and must move it to the 2nd or the 1st point.
+
+The first player to remove all of his checkers is declared the winner and a new game can start.
