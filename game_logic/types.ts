@@ -1,7 +1,3 @@
-
-
-// Types
-
 export type Player = "white" | "black";
 
 /**
@@ -33,5 +29,3 @@ export type GameState = {
     current_player: Player;
     dice: Dice | null; //if dice === null, dice not rolled yet 
 };
-
-
