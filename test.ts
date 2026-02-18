@@ -26,10 +26,10 @@ type Board = {
     points: Point[]; //length 24
     bar: Record<Player, number>;
     borne_off: Record<Player, number>;
-}
+};
 
 type GameState = {
     board: Board;
     current_player: Player;
     dice: Dice | null; //if dice === null, dice not rolled yet 
-}
+};
