@@ -1,3 +1,5 @@
+import { Dice } from "./types";
+
 function dice_roll(): Dice {
     let roll_1 = Math.floor(Math.random() * 6) + 1;
     let roll_2 = Math.floor(Math.random() * 6) + 1;
