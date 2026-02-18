@@ -1,0 +1,2 @@
+import {Dice} from "../game_logic/types";
+function is_legal_move(state: )

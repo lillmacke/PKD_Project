@@ -2,14 +2,14 @@
 
 // Types
 
-type Player = "white" | "black";
+export type Player = "white" | "black";
 
 /**
  * Triangles on the board
  * Invariant: count >= 0
  * if count === 0 -> owner === null
  */
-type Point = {
+export type Point = {
     player: Player | null;
     count: number;
 };
@@ -18,17 +18,17 @@ type Point = {
  * length is 2, 4 if doubles
  * Value between 1-6
  */
-type Dice = {
+export type Dice = {
     values: number[];
 };
 
-type Board = {
+export type Board = {
     points: Point[]; //length 24
     bar: Record<Player, number>;
     borne_off: Record<Player, number>;
 };
 
-type GameState = {
+export type GameState = {
     board: Board;
     current_player: Player;
     dice: Dice | null; //if dice === null, dice not rolled yet 
