@@ -46,6 +46,7 @@ function is_valid_move(state: GameState, from: number, die: number): boolean {
  * @param board 
  * @returns 
  */
+//evt flytta denna till Game_board? -Macke
 function stones_on_bar(board : Board, player: Player): boolean {
     return board.bar[player] > 0
 }
@@ -78,7 +79,9 @@ function apply_move_bar(state: GameState, die: number): GameState {
     const dest = state.current_player === "white"
                 ? 5 + die
                 : 18 - die ;
-    
-    state.board.points[dest];
+    if (is_valid_move(state, dest, die)) {
+        state.board.points[dest];
+    }
+
     return state;    
 };
