@@ -61,8 +61,8 @@ function apply_move(state: GameState, from: number, die: number): GameState {
                       ? from + die
                       : from - die;
 
-    if (stones_on_bar(state.board)) {
-        apply_move_bar;
+    if (stones_on_bar(state.board, state.current_player)) {
+        apply_move_bar(state);
     }
 
     if (is_valid_move(state, from, die)) {
@@ -70,9 +70,24 @@ function apply_move(state: GameState, from: number, die: number): GameState {
         point[from].count--;
         point[dest].count ++;
         return state;
+    
     }
     return state;
 };
+
+function update_player_status(state: GameState, from: number, destination : number): GameState {
+    const point = state.board.points;
+
+    if (point[from].count === 0) {
+        point[from].player = null;
+    }
+    if (point[destination].count > 0) {        
+        point[destination].player = state.current_player;
+    }
+
+    return state;
+
+}
 
 function apply_move_bar(state: GameState): GameState {
 
