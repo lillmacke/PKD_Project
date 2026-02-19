@@ -1,5 +1,5 @@
 import {Dice, GameState, Board, Player} from "./types";
-import {stones_on_bar} from "./logic_&_checks"
+import {stones_on_bar, update_player_status} from "./logic_&_checks"
 
 /**
  * Checks if a move is valid according to the rules
@@ -9,7 +9,7 @@ import {stones_on_bar} from "./logic_&_checks"
  * @returns 
  */
 export function is_valid_move(state: GameState, from: number, die: number): boolean {
-    const destination = state.current_player === "white"
+    const dest = state.current_player === "white"
                       ? from + die
                       : from - die;
 
@@ -17,7 +17,7 @@ export function is_valid_move(state: GameState, from: number, die: number): bool
         return false;
     }
 
-    if((destination < 0 || destination > 23)) {
+    if((dest < 0 || dest > 23)) {
         return false;
     }
 
@@ -26,14 +26,14 @@ export function is_valid_move(state: GameState, from: number, die: number): bool
     }
 
     if (state.current_player === "black" && 
-        state.board.points[destination].player === "white" &&
-        state.board.points[destination].count > 1) {
+        state.board.points[dest].player === "white" &&
+        state.board.points[dest].count > 1) {
         console.log("Invalid move");
             return false; 
                       
     } else if (state.current_player === "white" && 
-        state.board.points[destination].player === "black" &&
-        state.board.points[destination].count > 1) {
+        state.board.points[dest].player === "black" &&
+        state.board.points[dest].count > 1) {
             console.log("Invalid move");
                     return false;             
     }
@@ -60,37 +60,25 @@ export function apply_move(state: GameState, from: number, die: number): GameSta
         const point = state.board.points;
         point[from].count--;
         point[dest].count++;
+        update_player_status(state, from, dest);
         return state;
     
     }
     return state;
 };
 
-function update_player_status(state: GameState, from: number, destination : number): GameState {
-    const point = state.board.points;
-
-    if (point[from].count === 0) {
-        point[from].player = null;
-    }
-    if (point[destination].count > 0) {        
-        point[destination].player = state.current_player;
-    }
-
-    return state;
-
-}
-
 export function apply_move_bar(state: GameState, die: number): GameState {
     const dest = state.current_player === "white"
-                ? 5 + die
-                : 18 - die ;
+                ? die - 1
+                : 23 - die + 1 ;
 
     const bar = state.current_player === "white"
-                ? 5
-                : 18;
+                ? 0
+                : 23;
 
     if (is_valid_move(state, bar, die)) {
         state.board.points[dest];
+        update_player_status(state, bar, dest);
     }
     return state;
 }
