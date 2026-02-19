@@ -81,6 +81,9 @@ function apply_move(state: GameState, from: number, die: number): GameState {
     return state;
 };
 
-function apply_move_bar(state: GameState): GameState {
-
+function apply_move_bar(state: GameState, die: number): GameState {
+    const dest = state.current_player === "white"
+                ? 5 + die
+                : 18 - die ;
+    
 };
