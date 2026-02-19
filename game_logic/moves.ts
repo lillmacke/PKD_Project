@@ -79,9 +79,13 @@ function apply_move_bar(state: GameState, die: number): GameState {
     const dest = state.current_player === "white"
                 ? 5 + die
                 : 18 - die ;
-    if (is_valid_move(state, dest, die)) {
+
+    const bar = state.current_player === "white"
+                ? 5
+                : 18;
+                
+    if (is_valid_move(state, bar, die)) {
         state.board.points[dest];
     }
-
-    return state;    
+    return state;
 };
