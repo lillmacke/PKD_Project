@@ -61,14 +61,14 @@ function apply_move(state: GameState, from: number, die: number): GameState {
                       ? from + die
                       : from - die;
 
-    if (stones_on_bar(state.board)) {
+    if (stones_on_bar(state.board, state.current_player)) {
         apply_move_bar;
     }
 
     if (is_valid_move(state, from, die)) {
         const point = state.board.points;
         point[from].count--;
-        point[dest].count ++;
+        point[dest].count++;
         return state;
     }
     return state;
@@ -79,4 +79,6 @@ function apply_move_bar(state: GameState, die: number): GameState {
                 ? 5 + die
                 : 18 - die ;
     
+    state.board.points[dest];
+    return state;    
 };
