@@ -23,10 +23,14 @@ function is_valid_move(state: GameState, from: number, die: number): boolean {
     return true;
 };
 
-function apply_move(state: GameState, from: number, die: number): GameState {
-
-}
-
 function stones_on_bar(board: Board, player: Player): boolean {
-    
-}
+    if (board.bar.black > 0) 
+};
+
+function apply_move(state: GameState, from: number, die: number): GameState {
+    if (is_valid_move(state, from, die)) {
+            
+    }
+};
+
+

@@ -19,7 +19,7 @@ At the beginning of every game, the stones of both players are placed symmetrica
 - 5 stones on own 6th point
 
 The white stones will move clockwise to reach the top right part of the board (also called white inner board), 
-while the black steons move counter clockwise to reach the bottom right of the board (black inner board).
+while the black stones move counter clockwise to reach the bottom right of the board (black inner board).
 
 You are not allowed to move a stone backwards.
 
@@ -33,8 +33,8 @@ The movement of the stones obey some rules:
 - A stone can land or pass freely on a point with no other stone on it;
 - A player can have as many stones as he wants on a specific point;
 - If a player rolls a double, he has to play 4 times;
-- It is not possible for a stone to land, or pass on a point already occupied by 2 or more of his opponents stones;
-- A lonce stone on a point is called "a blot" and can be hit by his opponent.
+- It is not possible for a stone to land on a point already occupied by 2 or more of his opponents stones;
+- A lone stone on a point is called "a blot" and can be hit by his opponent.
 - If there is a way to play a roll it must be done even at the disadvantage of the player;
 - When a stone is hit, it is put "on the bar" and will have to start back on its opponents inner board;
 - A player cannot move any other stones as long as he has one on the bar.
@@ -53,9 +53,9 @@ For every roll, you can take out the stone corresponding.
 
 If you have stones on every gate and you roll 1-6, it means you can take on stone out from the 6th point and one checker out from the 1st point.
 
-If you roll a 6 but don't have any more stones on this point, you can use this roll to take out a checker from the next highest point.
+If you roll a 6 but don't have any more stones on this point, you can use this roll to take out a stone from the next highest point.
 
 But if you roll for example a 4 without any stones on this point and still having some on the 6th and the 5th point, 
-you cannot use this roll to bear off a checker and must move it to the 2nd or the 1st point.
+you cannot use this roll to bear off a stone and must move it to the 2nd or the 1st point.
 
 The first player to remove all of his checkers is declared the winner and a new game can start.
