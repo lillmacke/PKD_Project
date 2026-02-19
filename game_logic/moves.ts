@@ -46,16 +46,9 @@ function is_valid_move(state: GameState, from: number, die: number): boolean {
  * @param board 
  * @returns 
  */
-function stones_on_bar(board: Board): boolean {
-    if (board.bar.black > 0) {
-        return true;
-    }
-    if (board.bar.white > 0) {
-        return true;
-    } else {
-        return false;
-    }
-};
+function stones_on_bar(board : Board, player: Player): boolean {
+    return board.bar[player] > 0
+}
 
 /**
  * Moves a stone from a point according to the die roll.
