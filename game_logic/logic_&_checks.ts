@@ -10,3 +10,7 @@ import {Board, Player, GameState, Point, Dice} from "../game_logic/types";
 export function stones_on_bar(board : Board, player: Player): boolean {
     return board.bar[player] > 0
 };
+
+export function to_hit(state: GameState, from: number, die: number): GameState {
+
+}
