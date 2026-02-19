@@ -1,9 +1,15 @@
 import {Dice, GameState, Board, Player} from "./types";
 
 
-
+/**
+ * Checks to see if a move is valid according to the rules.
+ * @param state 
+ * @param from 
+ * @param die 
+ * @returns 
+ */
 function is_valid_move(state: GameState, from: number, die: number): boolean {   
-    if(from >= 0 && from < 24) {
+    if (from >= 0 && from < 24) {
         if (from + die < 24 || from - die >= 0) {
     
             if (state.current_player === "black" && 
@@ -23,14 +29,38 @@ function is_valid_move(state: GameState, from: number, die: number): boolean {
     return true;
 };
 
-function stones_on_bar(board: Board, player: Player): boolean {
-    if (board.bar.black > 0) 
-};
-
-function apply_move(state: GameState, from: number, die: number): GameState {
-    if (is_valid_move(state, from, die)) {
-            
+/**
+ * Checks if a player has stones on the bar. 
+ * @param board 
+ * @returns 
+ */
+function stones_on_bar(board: Board): boolean {
+    if (board.bar.black > 0) {
+        return true;
+    }
+    if (board.bar.white > 0) {
+        return true;
+    } else {
+        return false;
     }
 };
 
+/**
+ * Moves a stone from a point according to the die roll.
+ * @param state 
+ * @param from 
+ * @param die 
+ */
+function apply_move(state: GameState, from: number, die: number): GameState {
+    if (stones_on_bar(state.board)) {
+        apply_move_bar;
+    }
+    if (is_valid_move(state, from, die)) {
+        return state;
+    }
+    return state;
+};
 
+function apply_move_bar(state: GameState): GameState {
+
+};
