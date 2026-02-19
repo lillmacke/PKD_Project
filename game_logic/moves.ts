@@ -1,7 +1,13 @@
 import {Dice, GameState, Board, Player} from "./types";
 
 
-
+/**
+ * Checks if a move is valid according to the rules
+ * @param state 
+ * @param from 
+ * @param die 
+ * @returns 
+ */
 function is_valid_move(state: GameState, from: number, die: number): boolean {
     const destination = state.current_player === "white"
                       ? from + die
