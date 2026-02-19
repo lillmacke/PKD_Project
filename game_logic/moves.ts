@@ -64,10 +64,18 @@ function stones_on_bar(board: Board): boolean {
  * @param die 
  */
 function apply_move(state: GameState, from: number, die: number): GameState {
+    const dest = state.current_player === "white"
+                      ? from + die
+                      : from - die;
+
     if (stones_on_bar(state.board)) {
         apply_move_bar;
     }
+
     if (is_valid_move(state, from, die)) {
+        const point = state.board.points;
+        point[from].count--;
+        point[dest].count ++;
         return state;
     }
     return state;
