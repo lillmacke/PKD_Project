@@ -12,24 +12,41 @@ export function stones_on_bar(board : Board, player: Player): boolean {
     return board.bar[player] > 0
 };
 
-// Ska hitta punkter
+// Ska hitta punkter som endast har en sten, och kolla om den tillhör motståndaren
 export function find_single(state: GameState, point: number): boolean {
     const stone_count = state.board.points[point].count;
 
-    if (stone_count === 1) {
+    const opp = state.current_player === "white"
+                ? "black"
+                : "white";
+
+    if (stone_count === 1 &&
+        (state.current_player !== opp)) {
         return true;
     }
     return false;
 };
 
+// "äter upp" en ensam sten om man landar på den, och skickar den till baren
+// Invarianten blir väl att "dest"-punkten måste ha en ensam motståndar-sten, så denna
+// funktion kallas bara om detta är uppfyllt (se apply_move).
 export function to_hit(state: GameState, from: number, die: number): GameState {
+    const dest = state.current_player === "white"
+                ? from + die 
+                : from - die;
     const opp = state.current_player === "white"
                 ? "black"
-                : "white";    
+                : "white";
+    const point = state.board.points;
 
-
-        
+    point[from].count--;
+    update_player_status(state, from, dest);
+    if (state.current_player === "white") {
+        state.board.bar.black++; 
+    } else {
+        state.board.bar.white++;
     }
+   return state; 
 };
 
 export function update_player_status(state: GameState, from: number, dest : number): GameState {
