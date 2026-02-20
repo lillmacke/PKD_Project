@@ -61,7 +61,6 @@ export function apply_move(state: GameState, from: number, die: number): GameSta
     }
 
     if (find_single(state, (dest))) {
-        to_hit(state, from);
         to_hit(state, dest);
     }
     const point = state.board.points;
