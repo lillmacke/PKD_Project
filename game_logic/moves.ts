@@ -56,6 +56,10 @@ export function apply_move(state: GameState, from: number, die: number): GameSta
         return apply_move_bar(state, die);
     }
 
+    if (find_single(state, (from+die))) {
+        to_hit(state, from, die);
+    }
+    
     if (is_valid_move(state, from, die)) {
         const point = state.board.points;
         point[from].count--;

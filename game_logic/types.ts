@@ -29,3 +29,9 @@ export type GameState = {
     current_player: Player;
     dice: Dice | null; //if dice === null, dice not rolled yet 
 };
+ 
+export type move = {
+    state: GameState
+    from: number
+    die: number
+}
