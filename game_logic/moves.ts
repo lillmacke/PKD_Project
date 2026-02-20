@@ -8,7 +8,7 @@ import {Dice, GameState, Board, Player} from "./types";
  * @param die 
  * @returns 
  */
-function is_valid_move(state: GameState, from: number, die: number): boolean {
+export function is_valid_move(state: GameState, from: number, die: number): boolean {
     const destination = state.current_player === "white"
                       ? from + die
                       : from - die;
@@ -56,7 +56,7 @@ function stones_on_bar(board : Board, player: Player): boolean {
  * @param from 
  * @param die 
  */
-function apply_move(state: GameState, from: number, die: number): GameState {
+export function apply_move(state: GameState, from: number, die: number): GameState {
     const dest = state.current_player === "white"
                       ? from + die
                       : from - die;
