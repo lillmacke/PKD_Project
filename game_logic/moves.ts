@@ -1,5 +1,5 @@
 import {Dice, GameState, Board, Player} from "./types";
-import {stones_on_bar, update_player_status} from "./logic_&_checks"
+import {find_single, stones_on_bar, to_hit, update_player_status} from "./logic_&_checks"
 
 /**
  * Checks if a move is valid according to the rules
@@ -56,6 +56,10 @@ export function apply_move(state: GameState, from: number, die: number): GameSta
         apply_move_bar(state, die);
     }
 
+    if (find_single(state, (from+die))) {
+        to_hit(state, from, die);
+    }
+    
     if (is_valid_move(state, from, die)) {
         const point = state.board.points;
         point[from].count--;
