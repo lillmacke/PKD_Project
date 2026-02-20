@@ -55,18 +55,20 @@ export function apply_move(state: GameState, from: number, die: number): GameSta
     if (stones_on_bar(state.board, state.current_player)) {
         return apply_move_bar(state, die);
     }
-    
-    if (is_valid_move(state, from, die)) {
-        const point = state.board.points;
-        point[from].count--;
-        point[dest].count++;
-        update_player_status(state, from, dest);
+
+    if (!is_valid_move(state, from, die)) {
         return state; 
     }
 
     if (find_single(state, (dest))) {
-        to_hit(state, from, die);
+        to_hit(state, from);
+        to_hit(state, dest);
     }
+    const point = state.board.points;
+    point[from].count--;
+    point[dest].count++;
+    update_player_status(state, from);
+    update_player_status(state, dest);
     
     return state;
 };
@@ -101,10 +103,16 @@ export function apply_move_bar(state: GameState, die: number): GameState {
     if(state.board.bar[state.current_player] <= 0) {
         return state;
     }
-    if (is_valid_move_bar(state, dest)) {
-        state.board.bar[state.current_player]--;
-        state.board.points[dest].count++;
-        state.board.points[dest].player = state.current_player;
+    if (!is_valid_move_bar(state, dest)) {
+        return state;
     }
+    if (find_single(state, (dest))) {
+        to_hit(state, dest);
+    }
+
+    state.board.bar[state.current_player]--;
+    state.board.points[dest].count++;
+    update_player_status(state, dest);
+
     return state;
 }

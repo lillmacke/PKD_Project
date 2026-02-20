@@ -30,32 +30,15 @@ export function find_single(state: GameState, point: number): boolean {
 // "äter upp" en ensam sten om man landar på den, och skickar den till baren
 // Invarianten blir väl att "dest"-punkten måste ha en ensam motståndar-sten, så denna
 // funktion kallas bara om detta är uppfyllt (se apply_move).
-export function to_hit(state: GameState, from: number, die: number): GameState {
-    const dest = state.current_player === "white"
-                ? from + die 
-                : from - die;
-    const point = state.board.points;
+export function to_hit(state: GameState, index: number): GameState {
+    const point = state.board.points[index];
 
-    point[from].count--;
-    update_player_status(state, from);
-    update_player_status(state, dest);
-    if (state.current_player === "white") {
-        state.board.bar.black++; 
-    } else {
-        state.board.bar.white++;
+    point.count--;
+
+    if (point.count === 0) {
+        point.player = null
     }
-   return state; 
-};
 
-export function to_hit_from_bar(state: GameState, from: number, die: number): GameState {
-    const dest = state.current_player === "white"
-                ? die 
-                : 24 - die;
-    const point = state.board.points;
-
-    point[from].count--;
-    update_player_status(state, from);
-    update_player_status(state, dest);
     if (state.current_player === "white") {
         state.board.bar.black++; 
     } else {
