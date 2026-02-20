@@ -60,3 +60,38 @@ export function update_player_status(state: GameState, index : number): GameStat
     return state;
 
 }
+
+//BORNE OFF
+// ska kolla om en spelare har alla sina stenar hemma
+// Om man tex slår en 4 men har stenar på 5 eller 6, måste man flytta dessa först,
+// innan man tar hem de på 1-3
+
+
+/**
+ * Checks if a all of a players stone is home
+ * @param state 
+ * @returns 
+ */
+export function all_stones_home(state:GameState): boolean {
+    const point = state.board.points;
+    
+    if (state.current_player === "white") {
+        for (let i = 0; i < 6; i++) {
+            if (point[i].player !== "white" || null) {
+                return false;
+            }
+        }
+    } else {
+        for (let i = 23; i > 18; i--) {
+            if (point[i].player !== "black" || null) {
+                return false;
+            }
+        }
+    }
+    return true; 
+};
+
+export function borne_off(state: GameState): GameState {
+    const cur_borne = state.board.borne_off[state.current_player];
+
+}
