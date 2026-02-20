@@ -34,13 +34,11 @@ export function to_hit(state: GameState, from: number, die: number): GameState {
     const dest = state.current_player === "white"
                 ? from + die 
                 : from - die;
-    const opp = state.current_player === "white"
-                ? "black"
-                : "white";
     const point = state.board.points;
 
     point[from].count--;
-    update_player_status(state, from, dest);
+    update_player_status(state, from);
+    update_player_status(state, dest);
     if (state.current_player === "white") {
         state.board.bar.black++; 
     } else {
@@ -49,16 +47,33 @@ export function to_hit(state: GameState, from: number, die: number): GameState {
    return state; 
 };
 
-export function update_player_status(state: GameState, from: number, dest : number): GameState {
+export function to_hit_from_bar(state: GameState, from: number, die: number): GameState {
+    const dest = state.current_player === "white"
+                ? die 
+                : 24 - die;
     const point = state.board.points;
 
-    if (point[from].count === 0) {
-        point[from].player = null;
+    point[from].count--;
+    update_player_status(state, from);
+    update_player_status(state, dest);
+    if (state.current_player === "white") {
+        state.board.bar.black++; 
+    } else {
+        state.board.bar.white++;
     }
-    if (point[dest].count > 0) {        
-        point[dest].player = state.current_player;
+   return state; 
+};
+
+export function update_player_status(state: GameState, index : number): GameState {
+    const point = state.board.points;
+
+    if (point[index].count === 0) {
+        point[index].player = null;
+    }
+    if (point[index].count > 0) {
+        point[index].player = state.current_player;
     }
 
     return state;
 
-};
+}
