@@ -1,5 +1,6 @@
 import {Dice, GameState, Board, Player} from "./types";
-import {find_single, stones_on_bar, to_hit, update_player_status} from "./logic_&_checks"
+import {find_single, stones_on_bar, to_hit, update_player_status, 
+    all_stones_home, can_bear_off, borne_off} from "./logic_&_checks"
 
 /**
  * Checks if a move is valid according to the rules
@@ -9,31 +10,49 @@ import {find_single, stones_on_bar, to_hit, update_player_status} from "./logic_
  * @returns 
  */
 export function is_valid_move(state: GameState, from: number, die: number): boolean {
+    const player = state.current_player;
+    const point = state.board.points;
+    
     const dest = state.current_player === "white"
                       ? from + die
                       : from - die;
 
+    if (stones_on_bar(state.board, player)) {
+        return false;
+    }
+
     if(!(from >= 0 && from < 24)) {
         return false;
+    }
+
+    if (point[from].player !== player || point[from].count <= 0) {
+        return false;
+    }
+
+    const off_board = (player === "white" && dest > 23) ||
+                      (player === "black" && dest < 0);
+
+    if (off_board) {
+        if (!all_stones_home(state)) {
+            return false;
+        }
+
+        return can_bear_off(state, from, die);
     }
 
     if((dest < 0 || dest > 23)) {
         return false;
     }
 
-    if(state.board.points[from].player !== state.current_player) {
-        return false;
-    }
-
-    if (state.current_player === "black" && 
-        state.board.points[dest].player === "white" &&
-        state.board.points[dest].count > 1) {
+    if (player === "black" && 
+        point[dest].player === "white" &&
+        point[dest].count > 1) {
         console.log("Invalid move");
             return false; 
                       
-    } else if (state.current_player === "white" && 
-        state.board.points[dest].player === "black" &&
-        state.board.points[dest].count > 1) {
+    } else if (player === "white" && 
+        point[dest].player === "black" &&
+        point[dest].count > 1) {
             console.log("Invalid move");
                     return false;             
     }
@@ -48,17 +67,25 @@ export function is_valid_move(state: GameState, from: number, die: number): bool
  * @param die 
  */
 export function apply_move(state: GameState, from: number, die: number): GameState {
-    const dest = state.current_player === "white"
+    const player = state.current_player;
+    
+    const dest = player === "white"
                       ? from + die
                       : from - die;
 
-    if (stones_on_bar(state.board, state.current_player)) {
+    if (stones_on_bar(state.board, player)) {
         return apply_move_bar(state, die);
     }
 
     if (!is_valid_move(state, from, die)) {
         return state; 
     }
+
+    const off_board = (player === "white" && dest > 23) || 
+                      (player === "black" && dest < 0);
+    if (off_board) {
+            return borne_off(state, from);
+  }
 
     if (find_single(state, (dest))) {
         to_hit(state, dest);
