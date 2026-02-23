@@ -1,7 +1,7 @@
 import { GameState, Player, Point, Board  } from "./types";
 
 
-function starting_board(): GameState {
+export function starting_board(): GameState {
     const points : Point[] = []
     for (let i = 0; i < 24; i++) {
         points.push({
