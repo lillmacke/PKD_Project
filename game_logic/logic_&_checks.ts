@@ -139,8 +139,19 @@ export function can_bear_off(state: GameState, from: number, die: number): boole
 }
 
 
-function switch_player(state : GameState) : void {
+export function switch_player(state : GameState) : void {
     state.current_player === "white" 
                              ? "black" 
                              : "white"
+}
+
+
+export function game_over(state : GameState) : string | null {
+    if (state.board.borne_off.white === 15) {
+        return "white";
+    } else {
+        return "black";
+    }
+
+    return null;
 }
