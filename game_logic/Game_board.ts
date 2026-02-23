@@ -15,9 +15,15 @@ import promptSync from "prompt-sync";
 const prompt = promptSync({ sigint: true });
 
 
+
+
 console.log("Welcome to Backgammon!");
 
+
+
 const new_state = starting_board();
+
+
 
 const answer = prompt("Do you want to start a new game?: ");
 if (answer === "yes") {

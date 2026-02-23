@@ -13,7 +13,6 @@ export function dice_roll(): Dice {
 }
 
 
-<<<<<<< Updated upstream:game_logic/Dice.ts
 
 
 
@@ -21,5 +20,3 @@ export function dice_roll(): Dice {
 
 
 
-=======
->>>>>>> Stashed changes:axel.ts
