@@ -79,6 +79,7 @@ function play_game(state : GameState) : void {
         }
 
     }
+
     
     
     while(game_over(state) === null) {
