@@ -1,9 +1,14 @@
 import { starting_board } from "./Starting_board";
+
 import {Dice, GameState, Board, Player} from "./types";
+
 import {dice_roll} from "./Dice";
+
 import {find_single, stones_on_bar, to_hit, update_player_status, 
     all_stones_home, can_bear_off, borne_off, switch_player,
     game_over} from "./logic_&_checks"
+
+import { apply_move, is_valid_move } from "./moves";
 
 
 console.log("Welcome to Backgammon!");
@@ -14,14 +19,18 @@ function play_game(state : GameState) : void {
 
     while(game_over(state) === null) {
 
-        const dice = dice_roll();
+        if (state.dice === null) {
+            state.dice = dice_roll();
+        }
 
 
 
 
+        if(is_valid_move(state, from, die)) {
+            apply_move(state, from, die)
+        }
 
-
-
+        
 
 
 
