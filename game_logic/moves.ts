@@ -85,7 +85,7 @@ export function apply_move(state: GameState, from: number, die: number): GameSta
                       (player === "black" && dest < 0);
     if (off_board) {
             return borne_off(state, from);
-  }
+    }
 
     if (find_single(state, (dest))) {
         to_hit(state, dest);
