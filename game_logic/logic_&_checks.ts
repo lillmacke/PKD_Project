@@ -149,7 +149,8 @@ export function switch_player(state : GameState) : void {
 export function game_over(state : GameState) : string | null {
     if (state.board.borne_off.white === 15) {
         return "white";
-    } else {
+    } 
+    if (state.board.borne_off.black === 15) {
         return "black";
     }
 
