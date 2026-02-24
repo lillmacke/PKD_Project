@@ -1,6 +1,6 @@
 import { Dice } from "./types";
 
-function dice_roll(): Dice {
+export function dice_roll(): Dice {
     let roll_1 = Math.floor(Math.random() * 6) + 1;
     let roll_2 = Math.floor(Math.random() * 6) + 1;
 
@@ -11,5 +11,12 @@ function dice_roll(): Dice {
     console.log(roll_1, roll_2);
     return { values: [roll_1, roll_2] }; 
 }
+
+
+
+
+
+
+
 
 

@@ -137,3 +137,24 @@ export function can_bear_off(state: GameState, from: number, die: number): boole
     return !higher_stone_in_home(state, from);
     
 }
+
+
+export function switch_player(state : GameState) : void {
+    if (state.current_player === "white") {
+        state.current_player = "black";
+    } else {
+        state.current_player = "white";
+    }                      
+}
+
+
+export function game_over(state : GameState) : string | null {
+    if (state.board.borne_off.white === 15) {
+        return "white";
+    } 
+    if (state.board.borne_off.black === 15) {
+        return "black";
+    }
+
+    return null;
+}
