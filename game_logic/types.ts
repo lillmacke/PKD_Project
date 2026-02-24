@@ -35,3 +35,8 @@ export type move = {
     from: number
     die: number
 }
+
+export type BotAction = {
+    from: number; //-1 represents moving from the bar
+    die: number;
+}
