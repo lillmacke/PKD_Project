@@ -140,12 +140,10 @@ export function can_bear_off(state: GameState, from: number, die: number): boole
 
 
 export function switch_player(state : GameState) : void {
-    let player = state.current_player;
-
-    if (player === "white") {
-        player = "black";
+    if (state.current_player === "white") {
+        state.current_player = "black";
     } else {
-        player = "white";
+        state.current_player = "white";
     }                      
 }
 
