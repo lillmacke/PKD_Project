@@ -105,7 +105,7 @@ function play_game(state: GameState): void {
                 console.log("\nCurrent player:", state.current_player);
                 console.log("Remaining dice:", state.dice.values.join(", "));
 
-                // 🔥 NYTT: om inga lagliga drag finns -> passa turen
+              
                 if (!has_any_legal_move(state)) {
                     console.log("No legal moves. Passing turn.\n");
                     switch_player(state);
