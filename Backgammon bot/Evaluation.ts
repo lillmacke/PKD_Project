@@ -19,7 +19,6 @@ function evaluation(state: GameState): number{
     
     evaluation += state.board.borne_off.black * 10; 
     evaluation -= state.board.borne_off.white * 10;
-
     evaluation -= state.board.bar.black * 3; 
     evaluation += state.board.bar.white * 3; 
 
@@ -33,5 +32,6 @@ function evaluation(state: GameState): number{
             evaluation -= state.board.points[i].count * 2
         }
     }
+    return evaluation;
 
 }
