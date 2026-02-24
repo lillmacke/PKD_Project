@@ -83,13 +83,13 @@ function play_game(state: GameState): void {
             apply_move(state, from, die);
         }
 
-        // förbruka tärningen som användes
+        
         if (!remove_die(state, die)) {
             console.log("Error: die was not available to remove.");
             return false;
         }
 
-        // om inga tärningar kvar -> byt spelare
+        
         if (state.dice && state.dice.values.length === 0) {
             console.log("\nNext player\n");
             switch_player(state);
@@ -115,7 +115,7 @@ function play_game(state: GameState): void {
 
                 const onBar = stones_on_bar(state.board, state.current_player);
 
-                // välj tärning
+                
                 const dieInput = prompt("Choose die to use: ");
                 const die = Number(dieInput);
 
@@ -138,7 +138,7 @@ function play_game(state: GameState): void {
         }
     }
 
-    // ===== MAIN GAME LOOP =====
+
     while (game_over(state) === null) {
 
         if (state.dice === null) {
