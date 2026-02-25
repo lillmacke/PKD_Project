@@ -1,5 +1,6 @@
 import {
-    Player, Point, Dice, Board, GameState, move
+    Player, Point, Dice, Board, GameState, move,
+    BotAction
  } from "../game_logic/types";
 
 import {
@@ -35,3 +36,5 @@ function evaluation(state: GameState): number{
     return evaluation;
 
 }
+
+function bot_move(state: GameState): BotAction 

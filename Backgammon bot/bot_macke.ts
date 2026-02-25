@@ -1,5 +1,5 @@
 import { stones_on_bar } from "../game_logic/logic_&_checks";
-import { is_valid_move, is_valid_move_bar } from "../game_logic/moves";
+import { is_valid_move, is_valid_move_bar, apply_move } from "../game_logic/moves";
 import { BotAction, GameState } from "../game_logic/types";
 
 
@@ -27,6 +27,29 @@ export function get_all_legal_moves(state: GameState): BotAction[] {
         }
     }
     return legal_actions;
+}
+
+function clone(state : GameState){
+    //måste skrivas, ska klona state. verkar vara något som krävs för minmax
+}
+function Next_state(move: BotAction, state : GameState): GameState{
+    const cloned_state = clone(state);
+    return apply_move(cloned_state, move.from, move.die)
+}
+// generar en array med gamestates för alla moves från get_all_legal_moves. Tänker att vi kan skicka alla dessa states genom evaluate och ta ut det botAction med högst tal. 
+
+function All_next_states(state : GameState): GameState[]{
+    const moves = get_all_legal_moves(state); 
+    const all_states : GameState[] = []; 
+    for (let i = 0; i < moves.length; i++) {
+        all_states.push(Next_state(moves[i], state))
+    }
+    return all_states;
+}
+
+
+function bot_move(Next_state : GameState){
+    
 }
 
 export function random_bot_move(state: GameState): BotAction | null {
