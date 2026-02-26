@@ -14,7 +14,7 @@ import {
  * Poäng för 
  * 
  */
-function evaluation(state: GameState): number{
+export function evaluation(state: GameState): number{
     let evaluation = 0; 
 
     
@@ -37,4 +37,3 @@ function evaluation(state: GameState): number{
 
 }
 
-function bot_move(state: GameState): BotAction 

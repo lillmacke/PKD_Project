@@ -1,6 +1,7 @@
 import { stones_on_bar } from "../game_logic/logic_&_checks";
 import { is_valid_move, is_valid_move_bar, apply_move } from "../game_logic/moves";
 import { BotAction, GameState } from "../game_logic/types";
+import {evaluation} from "../Backgammon bot/Evaluation";
 
 
 export function get_all_legal_moves(state: GameState): BotAction[] {
@@ -31,6 +32,9 @@ export function get_all_legal_moves(state: GameState): BotAction[] {
 
 function clone(state : GameState){
     //måste skrivas, ska klona state. verkar vara något som krävs för minmax
+    
+    return JSON.parse(JSON.stringify(state));
+
 }
 function Next_state(move: BotAction, state : GameState): GameState{
     const cloned_state = clone(state);
@@ -38,7 +42,7 @@ function Next_state(move: BotAction, state : GameState): GameState{
 }
 // generar en array med gamestates för alla moves från get_all_legal_moves. Tänker att vi kan skicka alla dessa states genom evaluate och ta ut det botAction med högst tal. 
 
-function All_next_states(state : GameState): GameState[]{
+export function All_next_states(state : GameState): GameState[]{
     const moves = get_all_legal_moves(state); 
     const all_states : GameState[] = []; 
     for (let i = 0; i < moves.length; i++) {
@@ -48,8 +52,19 @@ function All_next_states(state : GameState): GameState[]{
 }
 
 
-function bot_move(Next_state : GameState){
-    
+export function bot_move(All_next_states : GameState[], state: GameState): BotAction {
+    const a = All_next_states;
+    const b = get_all_legal_moves(state)
+    let best_move = b[0]
+    let best_state = a[0]
+    for (let i = 1; i < a.length; i++){
+        if (evaluation(best_state) < evaluation(a[i])){
+            best_state = a[i];
+            best_move = b[i]
+
+        }
+    }
+    return best_move;
 }
 
 export function random_bot_move(state: GameState): BotAction | null {
