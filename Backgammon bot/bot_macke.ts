@@ -52,18 +52,26 @@ export function All_next_states(state : GameState): GameState[]{
 }
 
 
-export function bot_move(All_next_states : GameState[], state: GameState): BotAction {
-    const a = All_next_states;
-    const b = get_all_legal_moves(state)
-    let best_move = b[0]
-    let best_state = a[0]
-    for (let i = 1; i < a.length; i++){
-        if (evaluation(best_state) < evaluation(a[i])){
-            best_state = a[i];
-            best_move = b[i]
+export function bot_move(state: GameState): BotAction | null {
+    const moves = get_all_legal_moves(state);
+    
+    if (moves.length === 0) {
+        return null;
+    }
 
+    let best_move = moves[0];
+    let best_score = evaluation(Next_state(best_move, state));
+
+    for (let i = 1; i < moves.length; i++) {
+        const next_state = Next_state(moves[i], state);
+        const score = evaluation(next_state);
+
+        if (score > best_score) {
+            best_score = score;
+            best_move = moves[i];
         }
     }
+
     return best_move;
 }
 
