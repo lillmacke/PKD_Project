@@ -30,13 +30,13 @@ export function get_all_legal_moves(state: GameState): BotAction[] {
     return legal_actions;
 }
 
-function clone(state : GameState){
+export function clone(state : GameState){
     //måste skrivas, ska klona state. verkar vara något som krävs för minmax
     
     return JSON.parse(JSON.stringify(state));
 
 }
-function Next_state(move: BotAction, state : GameState): GameState{
+export function Next_state(move: BotAction, state : GameState): GameState{
     const cloned_state = clone(state);
     return apply_move(cloned_state, move.from, move.die)
 }
