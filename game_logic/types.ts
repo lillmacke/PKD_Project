@@ -8,7 +8,7 @@ export type Player = "white" | "black";
 export type Point = {
     player: Player | null;
     count: number;
-};
+}
 
 /**
  * length is 2, 4 if doubles
@@ -16,19 +16,19 @@ export type Point = {
  */
 export type Dice = {
     values: number[];
-};
+}
 
 export type Board = {
     points: Point[]; //length 24
     bar: Record<Player, number>;
     borne_off: Record<Player, number>;
-};
+}
 
 export type GameState = {
     board: Board;
     current_player: Player;
     dice: Dice | null; //if dice === null, dice not rolled yet 
-};
+}
  
 export type move = {
     state: GameState

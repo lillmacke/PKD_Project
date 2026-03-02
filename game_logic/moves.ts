@@ -1,33 +1,37 @@
-import {Dice, GameState, Board, Player} from "./types";
+import {GameState} from "./types";
 import {find_single, stones_on_bar, to_hit, update_player_status, 
     all_stones_home, can_bear_off, borne_off} from "./logic_&_checks"
 
 /**
+ * MÅSTE SKRIVAS KLART 
  * Checks if a move is valid according to the rules
+ * @exampl
  * @param state 
  * @param from 
  * @param die 
+ * @precondition 
+ * @complexity
  * @returns 
  */
-export function is_valid_move(state: GameState, from: number, die: number): boolean {
+export function is_valid_move(state: GameState, 
+                              from: number, die: number): boolean {
     const player = state.current_player;
     const point = state.board.points;
-    
     const dest = state.current_player === "white"
-                      ? from + die
-                      : from - die;
+                 ? from + die
+                 : from - die;
 
     if (stones_on_bar(state.board, player)) {
         return false;
-    }
+    } else {}
 
     if(!(from >= 0 && from < 24)) {
         return false;
-    }
+    } else {}
 
     if (point[from].player !== player || point[from].count <= 0) {
         return false;
-    }
+    } else {}
 
     const off_board = (player === "white" && dest > 23) ||
                       (player === "black" && dest < 0);
@@ -35,21 +39,18 @@ export function is_valid_move(state: GameState, from: number, die: number): bool
     if (off_board) {
         if (!all_stones_home(state)) {
             return false;
-        }
-
+        } else {}
         return can_bear_off(state, from, die);
-    }
+    } else {}
 
     if((dest < 0 || dest > 23)) {
         return false;
-    }
+    } else {}
 
     if (player === "black" && 
-        point[dest].player === "white" &&
-        point[dest].count > 1) {
+        point[dest].player === "white" && point[dest].count > 1) {
         console.log("Invalid move");
-            return false; 
-                      
+        return false;                  
     } else if (player === "white" && 
         point[dest].player === "black" &&
         point[dest].count > 1) {

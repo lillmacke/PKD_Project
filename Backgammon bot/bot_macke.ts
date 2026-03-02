@@ -4,7 +4,7 @@ import { BotAction, GameState } from "../game_logic/types";
 import {evaluation} from "../Backgammon bot/Evaluation";
 
 
-export function get_all_legal_moves(state: GameState): BotAction[] {
+export function get_all_legal_moves(state: GameState): Array<BotAction> {
     const legal_actions: BotAction[] = [];
     if (!state.dice || state.dice.values.length === 0) {
         return legal_actions;
