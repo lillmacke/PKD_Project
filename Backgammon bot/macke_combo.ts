@@ -1,7 +1,7 @@
 import {GameState, BotAction} from "../game_logic/types";
 import {stones_on_bar} from "../game_logic/logic_&_checks";
 import {is_valid_move_bar, is_valid_move, apply_move} from "../game_logic/moves";
-import {clone} from "./bot_macke";
+import {clone} from "./clone";
 import { evaluation } from "./Evaluation";
 
 //Hjälpfunktioner för att evaluera move-träd som tar tärningsordning i åtanke
