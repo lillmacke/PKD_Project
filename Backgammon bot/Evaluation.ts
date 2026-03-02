@@ -9,10 +9,9 @@ import {
  * Poäng för 
  * 
  */
-export function evaluation(state: GameState): number{
+export function evaluation(state: GameState): number {
     let evaluation = 0; 
 
-    
     evaluation += state.board.borne_off.black * 15; 
     evaluation -= state.board.borne_off.white * 15;
     
@@ -21,16 +20,13 @@ export function evaluation(state: GameState): number{
 
     for (let i = 0; i < 24; i++){
         const point = state.board.points[i];
-
-
         if (point.player === "black") {
             // Antal steg kvar för en sten att kunna bli borne off
             evaluation -= (i + 1) * point.count
-
             // Sten som står själv
             if (point.count === 1) {
                 evaluation -= 5;
-            }
+            } else {}
 
             //Points där svarta har minst 2 stenar
             if (point.count >= 2) {
@@ -39,19 +35,16 @@ export function evaluation(state: GameState): number{
 
         } else if (point.player === "white") {
             evaluation += (24 - i) * point.count;
-
             if (point.count === 1) {
                 evaluation += 5;
-            }
+            } else {}
 
             if (point.count >= 2) {
                 white_made_points++;
-            }
-        }
+            } else {}
+        } else {}
     }
     //Skillnaden i antal points där svart och vit har stenar fler än 1
     evaluation += 2 * (black_made_points - white_made_points);
-
     return evaluation;
-
 }

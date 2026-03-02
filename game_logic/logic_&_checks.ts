@@ -1,81 +1,164 @@
-import {Board, Player, GameState, Point, Dice} from "../game_logic/types";
-import { apply_move } from "./moves";
-
+import {Board, Player, GameState} from "../game_logic/types";
 
 /**
- * Checks if a player has stones on the bar. 
+ * MÅSTE SKRIVAS KLART 
+ * Checks if a move is valid according to the rules
+ * @exampl
+ * @param state 
+ * @param from 
+ * @param die 
+ * @precondition 
+ * @complexity
+ * @returns 
+ */
+export function is_valid_move(state: GameState, 
+                              from: number, die: number): boolean {
+    const player = state.current_player;
+    const point = state.board.points;
+    const dest = state.current_player === "white"
+                 ? from + die
+                 : from - die;
+
+    if (stones_on_bar(state.board, player)) {
+        return false;
+    } else {}
+
+    if (!(from >= 0 && from < 24)) {
+        return false;
+    } else {}
+
+    if (point[from].player !== player || point[from].count <= 0) {
+        return false;
+    } else {}
+
+    const off_board = (player === "white" && dest > 23) ||
+                      (player === "black" && dest < 0);
+
+    if (off_board) {
+        if (!all_stones_home(state)) {
+            return false;
+        } else {}
+        return can_bear_off(state, from, die);
+    } else {}
+
+    if ((dest < 0 || dest > 23)) {
+        return false;
+    } else {}
+
+    if (player === "black" && 
+        point[dest].player === "white" && point[dest].count > 1) {
+        return false;                  
+    } else if (player === "white" && 
+        point[dest].player === "black" && point[dest].count > 1) {
+        return false;             
+    }
+    return true;
+}
+
+export function is_valid_move_bar(state: GameState, dest: number): boolean {
+    const points = state.board.points;
+    const player = state.current_player;
+
+    if ((dest < 0 || dest > 23)) {
+        return false;
+    } else {}
+
+    if (player === "black" && 
+        points[dest].player === "white" && points[dest].count > 1) {
+        return false; 
+                      
+    } else if (player === "white" && 
+        points[dest].player === "black" && points[dest].count > 1) {
+        return false;             
+    }
+    return true;
+}
+
+/**
+ * 
  * @param board 
  * @param player 
  * @returns 
  */
-export function stones_on_bar(board : Board, player: Player): boolean {
-    return board.bar[player] > 0
-};
+export const stones_on_bar = (board: Board, player: Player): boolean =>
+    board.bar[player] > 0;
 
-// Ska hitta punkter som endast har en sten, och kolla om den tillhör motståndaren
+/**
+ * Ska hitta punkter som endast har en sten, 
+ * och kolla om den tillhör motståndaren
+ * @param state 
+ * @param index 
+ * @returns 
+ */
 export function find_single(state: GameState, index: number): boolean {
     const point = state.board.points[index];
 
     if (point.count === 1 && point.player !== null &&
         point.player !== state.current_player) {
         return true;
-    }
+    } else {}
     return false;
-};
+}
 
-// "äter upp" en ensam sten om man landar på den, och skickar den till baren
-// Invarianten blir väl att "dest"-punkten måste ha en ensam motståndar-sten, så denna
-// funktion kallas bara om detta är uppfyllt (se apply_move).
+/**
+ * "äter upp" en ensam sten om man landar på den, och skickar den till baren
+ * Invarianten blir väl att "dest"-punkten måste ha en ensam motståndar-sten, 
+ * så denna funktion kallas bara om detta är uppfyllt (se apply_move).
+ * @example
+ * @param state 
+ * @param index 
+ * @precondition
+ * @complexity
+ * @returns 
+ */
 export function to_hit(state: GameState, index: number): GameState {
     const point = state.board.points[index];
+    const bar = state.board.bar;
 
     point.count--;
 
     if (point.count === 0) {
         point.player = null
-    }
+    } else {}
 
     if (state.current_player === "white") {
-        state.board.bar.black++; 
+        bar.black++; 
     } else {
-        state.board.bar.white++;
+        bar.white++;
     }
-   return state; 
-};
+    return state; 
+}
 
-export function update_player_status(state: GameState, index : number): GameState {
+export function update_player_status(state: GameState, 
+                                     index: number): GameState {
     const point = state.board.points;
 
     if (point[index].count === 0) {
         point[index].player = null;
-    }
+    } else {}
+
     if (point[index].count > 0) {
         point[index].player = state.current_player;
-    }
-
+    } else {}
     return state;
-
 }
-
-//BORNE OFF
-// ska kolla om en spelare har alla sina stenar hemma
-// Om man tex slår en 4 men har stenar på 5 eller 6, måste man flytta dessa först,
-// innan man tar hem de på 1-3
-
 
 /**
  * Checks if a all of a players stone is home
- * @param state 
+ * @example
+ * @param state
+ * @precondition
+ * @complexity
  * @returns 
  */
 export function all_stones_home(state:GameState): boolean {
     const point = state.board.points;
-    
-    if (state.board.bar[state.current_player] > 0) {
+    const player = state.current_player;
+    if (state.board.bar[player] > 0) {
         return false;
-    }
+    } else {}
 
-    if (state.current_player === "white") {
+    if (player === "white") {
         for (let i = 0; i < 18 ; i++) {
             if (point[i].player === "white" && point[i].count > 0) {
                 return false;
@@ -85,61 +168,74 @@ export function all_stones_home(state:GameState): boolean {
         for (let i = 6; i < 24; i++) {
             if (point[i].player === "black" && point[i].count > 0) {
                 return false;
-            }
+            } else {}
         }
     }
     return true; 
-};
-
-export function borne_off(state: GameState, from: number): GameState {
-    const board = state.board;
-
-    board.points[from].count--;
-    if(board.points[from].count === 0) {
-        board.points[from].player = null;
-    }
-
-    board.borne_off[state.current_player]++;
-
-    return state;
-
 }
 
-export function higher_stone_in_home(state: GameState, from : number): boolean {   
+/**
+ * 
+ * @example
+ * @param state 
+ * @param from
+ * @precondition 
+ * @complexity 
+ * @returns 
+ */
+export function higher_stone_in_home(state: GameState, from: number): boolean {   
+    const points = state.board.points;
+
     if (state.current_player === "white") {
         for (let i = 18; i < from; i++) {
-            if(state.board.points[i].player === "white" 
-                && state.board.points[i].count > 0)
+            if (points[i].player === "white" && points[i].count > 0) {
                 return true;
+            } else {}           
         }
     } else {
         for (let i = from + 1; i <= 5; i++) {
-            if(state.board.points[i].player === "black" 
-                && state.board.points[i].count > 0)
+            if(points[i].player === "black" 
+                && points[i].count > 0) {
                 return true;
-            }
+            } else {}   
+        }
     }
     return false;
 }
 
-
-export function can_bear_off(state: GameState, from: number, die: number): boolean {
+export function can_bear_off(state: GameState, 
+                             from: number, die: number): boolean {
     const dist = state.current_player === "white"
                  ? 24 - from
                  : from + 1;
+
     if (die === dist) {
         return true;
-    }
+    } else {}
+
     if (die < dist) {
         return false;
-    }
-
-    return !higher_stone_in_home(state, from);
-    
+    } else {}
+    return !higher_stone_in_home(state, from);   
 }
 
+//BORNE OFF
+// ska kolla om en spelare har alla sina stenar hemma
+// Om man tex slår en 4 men har stenar på 5 eller 6, måste man flytta dessa först,
+// innan man tar hem de på 1-3
+export function borne_off(state: GameState, from: number): GameState {
+    const board = state.board;
 
-export function switch_player(state : GameState) : void {
+    board.points[from].count--;
+    
+    if (board.points[from].count === 0) {
+        board.points[from].player = null;
+    } else {}
+    board.borne_off[state.current_player]++;
+    return state;
+}
+
+export function switch_player(state: GameState): void {
     if (state.current_player === "white") {
         state.current_player = "black";
     } else {
@@ -147,14 +243,15 @@ export function switch_player(state : GameState) : void {
     }                      
 }
 
+export function game_over(state: GameState): string | null {
+    const borne_tot = state.board.borne_off;
 
-export function game_over(state : GameState) : string | null {
-    if (state.board.borne_off.white === 15) {
+    if (borne_tot.white === 15) {
         return "white";
-    } 
-    if (state.board.borne_off.black === 15) {
+    }  else {}
+    
+    if (borne_tot.black === 15) {
         return "black";
-    }
-
+    } else {}
     return null;
 }
