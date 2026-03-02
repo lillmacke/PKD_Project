@@ -15,9 +15,6 @@ export function evaluation(state: GameState): number{
     
     evaluation += state.board.borne_off.black * 15; 
     evaluation -= state.board.borne_off.white * 15;
-
-    evaluation -= state.board.bar.black * 25; 
-    evaluation += state.board.bar.white * 25; 
     
     let black_made_points = 0;
     let white_made_points = 0;
@@ -32,7 +29,7 @@ export function evaluation(state: GameState): number{
 
             // Sten som står själv
             if (point.count === 1) {
-                evaluation -= 2;
+                evaluation -= 5;
             }
 
             //Points där svarta har minst 2 stenar
@@ -44,7 +41,7 @@ export function evaluation(state: GameState): number{
             evaluation += (24 - i) * point.count;
 
             if (point.count === 1) {
-                evaluation += 2;
+                evaluation += 5;
             }
 
             if (point.count >= 2) {
