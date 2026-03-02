@@ -49,48 +49,49 @@ export function is_valid_move(state: GameState,
 
     if (player === "black" && 
         point[dest].player === "white" && point[dest].count > 1) {
-        console.log("Invalid move");
         return false;                  
     } else if (player === "white" && 
-        point[dest].player === "black" &&
-        point[dest].count > 1) {
-            console.log("Invalid move");
-                    return false;             
+        point[dest].player === "black" && point[dest].count > 1) {
+        return false;             
     }
-
     return true;
-};
+}
 
 /**
+ * MÅSTE SKRIVAS KLART 
  * Moves a stone from a point according to the die roll.
+ * @example 
  * @param state 
  * @param from 
  * @param die 
+ * @precondition 
+ * @complexity
+ * @returns
  */
 export function apply_move(state: GameState, from: number, die: number): GameState {
     const player = state.current_player;
-    
     const dest = player === "white"
-                      ? from + die
-                      : from - die;
+                 ? from + die
+                 : from - die;
 
     if (stones_on_bar(state.board, player)) {
         return apply_move_bar(state, die);
-    }
+    } else {}
 
     if (!is_valid_move(state, from, die)) {
         return state; 
-    }
+    } else {}
 
     const off_board = (player === "white" && dest > 23) || 
                       (player === "black" && dest < 0);
     if (off_board) {
             return borne_off(state, from);
-    }
+    } else {}
 
     if (find_single(state, (dest))) {
         to_hit(state, dest);
-    }
+    } else {}
+
     const point = state.board.points;
     point[from].count--;
     point[dest].count++;
