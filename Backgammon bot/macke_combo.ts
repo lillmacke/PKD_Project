@@ -64,14 +64,14 @@ export function sim_seq_order(state: GameState, dice_order: number[]) {
     return results;
 }
 
-export function choose_best_move_by_order(state: GameState): BotAction | null {
+export function choose_best_move_by_order(state: GameState): BotAction[] | null {
     if (!state.dice || !state.dice.values || state.dice.values.length === 0) {
         return null;
     }
 
     const dice = state.dice.values.slice();
     
-    //Om bara 1 tärning( eller fler än 2), gå tillbaka till att hantera single-tärning
+    //Om bara 1 tärning(eller fler än 2), gå tillbaka till att hantera single-tärning
     if (dice.length === 1 || dice.length > 2) {
         const seq = sim_seq_order(state, dice);
         if (seq.length === 0) {
@@ -86,7 +86,8 @@ export function choose_best_move_by_order(state: GameState): BotAction | null {
                 best = seq[i];
             }
         }
-        return best.sequence[0] ?? null;
+        // return the entire sequence, not only the first action
+        return best.sequence.length > 0 ? best.sequence : null;
     }
 
     // Om 2 tärningar, gå igenom alla sekvenser med dice1->dice2 och dice2->dice1
@@ -110,5 +111,5 @@ export function choose_best_move_by_order(state: GameState): BotAction | null {
             best = all_seq[i];
         }
     }
-    return best.sequence[0] ?? null;
+    return best.sequence.length > 0 ? best.sequence : null;
 }
