@@ -2,6 +2,7 @@ import { stones_on_bar } from "../game_logic/logic_&_checks";
 import { is_valid_move, is_valid_move_bar, apply_move } from "../game_logic/moves";
 import { BotAction, GameState } from "../game_logic/types";
 import {evaluation} from "../Backgammon bot/Evaluation";
+import { clone } from "./clone";
 
 
 export function get_all_legal_moves(state: GameState): Array<BotAction> {
@@ -30,12 +31,6 @@ export function get_all_legal_moves(state: GameState): Array<BotAction> {
     return legal_actions;
 }
 
-export function clone(state : GameState){
-    //måste skrivas, ska klona state. verkar vara något som krävs för minmax
-    
-    return JSON.parse(JSON.stringify(state));
-
-}
 export function Next_state(move: BotAction, state : GameState): GameState{
     const cloned_state = clone(state);
     return apply_move(cloned_state, move.from, move.die)
