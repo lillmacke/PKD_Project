@@ -17,15 +17,9 @@ import promptSync from "prompt-sync";
 const prompt = promptSync({ sigint: true });
 
 
-
-
 console.log("Welcome to Backgammon!");
 
-
-
 const new_state = starting_board();
-
-
 
 const answer = prompt("Do you want to start a new game?: ");
 const real_answer = answer.toLowerCase();
@@ -134,6 +128,9 @@ function play_game(state: GameState): void {
                 } else {}
 
                 for (const moves of seq) {
+                    
+                    console.log(`Bot plays die ${moves.die} from ${moves.from}`);
+
                     if(!check_move(state, moves.from, moves.die)) {
                         console.log("Bot can't make a move");
                         switch_player(state);
