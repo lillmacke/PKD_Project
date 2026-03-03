@@ -5,9 +5,9 @@ import {GameState} from "../game_logic/types";
 import {dice_roll} from "../game_logic/Dice";
 
 import { stones_on_bar, switch_player,
-    game_over} from "../game_logic/logic_&_checks"
+    game_over, is_valid_move, is_valid_move_bar,} from "../game_logic/logic_&_checks"
 
-import {apply_move, is_valid_move, is_valid_move_bar, apply_move_bar} from "../game_logic/moves";
+import {apply_move, apply_move_bar} from "../game_logic/moves";
 
 import {choose_best_move_by_order} from "./macke_combo";
 
