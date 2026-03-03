@@ -1,61 +1,8 @@
 import {GameState} from "./types";
-import {find_single, stones_on_bar, to_hit, update_player_status, 
-    all_stones_home, can_bear_off, borne_off} from "./logic_&_checks"
-
-/**
- * MÅSTE SKRIVAS KLART 
- * Checks if a move is valid according to the rules
- * @exampl
- * @param state 
- * @param from 
- * @param die 
- * @precondition 
- * @complexity
- * @returns 
- */
-export function is_valid_move(state: GameState, 
-                              from: number, die: number): boolean {
-    const player = state.current_player;
-    const point = state.board.points;
-    const dest = state.current_player === "white"
-                 ? from + die
-                 : from - die;
-
-    if (stones_on_bar(state.board, player)) {
-        return false;
-    } else {}
-
-    if(!(from >= 0 && from < 24)) {
-        return false;
-    } else {}
-
-    if (point[from].player !== player || point[from].count <= 0) {
-        return false;
-    } else {}
-
-    const off_board = (player === "white" && dest > 23) ||
-                      (player === "black" && dest < 0);
-
-    if (off_board) {
-        if (!all_stones_home(state)) {
-            return false;
-        } else {}
-        return can_bear_off(state, from, die);
-    } else {}
-
-    if((dest < 0 || dest > 23)) {
-        return false;
-    } else {}
-
-    if (player === "black" && 
-        point[dest].player === "white" && point[dest].count > 1) {
-        return false;                  
-    } else if (player === "white" && 
-        point[dest].player === "black" && point[dest].count > 1) {
-        return false;             
-    }
-    return true;
-}
+import {
+    find_single, stones_on_bar, to_hit, update_player_status, 
+    is_valid_move, is_valid_move_bar, borne_off
+} from "./logic_&_checks"
 
 /**
  * MÅSTE SKRIVAS KLART 
@@ -68,7 +15,8 @@ export function is_valid_move(state: GameState,
  * @complexity
  * @returns
  */
-export function apply_move(state: GameState, from: number, die: number): GameState {
+export function apply_move(state: GameState, from: number, 
+                           die: number): GameState {
     const player = state.current_player;
     const dest = player === "white"
                  ? from + die
@@ -93,53 +41,36 @@ export function apply_move(state: GameState, from: number, die: number): GameSta
     } else {}
 
     const point = state.board.points;
+
     point[from].count--;
     point[dest].count++;
+
     update_player_status(state, from);
     update_player_status(state, dest);
     
     return state;
-};
-
-
-export function is_valid_move_bar(state: GameState, dest: number): boolean {
-
-    if((dest < 0 || dest > 23)) {
-        return false;
-    }
-
-    if (state.current_player === "black" && 
-        state.board.points[dest].player === "white" &&
-        state.board.points[dest].count > 1) {
-        console.log("Invalid move");
-            return false; 
-                      
-    } else if (state.current_player === "white" && 
-        state.board.points[dest].player === "black" &&
-        state.board.points[dest].count > 1) {
-            console.log("Invalid move");
-                    return false;             
-    }
-
-    return true;
-};
+}
 
 export function apply_move_bar(state: GameState, die: number): GameState {
     const dest = state.current_player === "white"
-                ? die - 1
-                : 24 - die ;
+                 ? die - 1
+                 : 24 - die;
+
     if(state.board.bar[state.current_player] <= 0) {
         return state;
-    }
+    } else {}
+
     if (!is_valid_move_bar(state, dest)) {
         return state;
-    }
+    } else {}
+
     if (find_single(state, (dest))) {
         to_hit(state, dest);
-    }
+    } else {}
 
     state.board.bar[state.current_player]--;
     state.board.points[dest].count++;
+
     update_player_status(state, dest);
 
     return state;
