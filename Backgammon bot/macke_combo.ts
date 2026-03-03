@@ -1,7 +1,9 @@
 import {GameState, BotAction} from "../game_logic/types";
 import {
-    stones_on_bar, is_valid_move_bar, is_valid_move
+    stones_on_bar
 } from "../game_logic/logic_&_checks";
+
+import { is_valid_move, is_valid_move_bar } from "../game_logic/valid_move";
 import {apply_move} from "../game_logic/moves";
 import {clone} from "./clone";
 import { evaluation } from "./Evaluation";
