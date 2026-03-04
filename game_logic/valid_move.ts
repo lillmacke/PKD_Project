@@ -1,5 +1,4 @@
 import {GameState} from "./types";
-
 import {stones_on_bar, all_stones_home, can_bear_off} from "./logic_&_checks";
 
 
