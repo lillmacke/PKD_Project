@@ -1,12 +1,10 @@
 import { 
     legal_moves_one_die,  sim_seq_order, choose_best_move_by_order
- } from "../Backgammon bot/combo_macke";
+ } from "../PKD_Project/Backgammon bot/combo_sequence";
 import { 
     clone
-} from "../Backgammon bot/clone";
-import {
-    check_move
-} from "../Backgammon bot/bot_gameboard";
+} from "../PKD_Project/Backgammon bot/clone";
+
  import{
     GameState
  } from "../game_logic/types";
