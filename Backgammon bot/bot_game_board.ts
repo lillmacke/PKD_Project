@@ -1,19 +1,13 @@
 import { starting_board } from "../game_logic/Starting_board";
-
 import {GameState} from "../game_logic/types";
-
 import {dice_roll} from "../game_logic/Dice";
-
-import { stones_on_bar, switch_player,
-    game_over} from "../game_logic/logic_&_checks"
-
+import {
+    stones_on_bar, switch_player, game_over
+} from "../game_logic/logic_&_checks"
 import { is_valid_move, is_valid_move_bar } from "../game_logic/valid_move";
-
 import {apply_move, apply_move_bar} from "../game_logic/moves";
-
-import {choose_best_move_by_order} from "./macke_combo";
-
-
+import {choose_best_move_by_order} from "./combo_sequence";
+import {render_board} from "../game_logic/UI";
 import promptSync from "prompt-sync";
 
 const prompt = promptSync({ sigint: true });
@@ -108,7 +102,7 @@ function play_game(state: GameState): void {
 
     function make_move(state: GameState): void {
         while (state.dice && state.dice.values.length > 0) {
-            console.log(state.board);
+            console.log(render_board(state));
             console.log("\nCurrent player:", state.current_player);
             console.log("Remaining dice:", state.dice.values.join(", "));
           
@@ -130,8 +124,8 @@ function play_game(state: GameState): void {
                 } else {}
 
                 for (const moves of seq) {
-                    
-                    console.log(`Bot plays die ${moves.die} from ${moves.from}`);
+                    const move_display = moves.from + 1;
+                    console.log(`Bot plays die ${moves.die} from ${move_display}`);
 
                     if(!check_move(state, moves.from, moves.die)) {
                         console.log("Bot can't make a move");
@@ -160,7 +154,7 @@ function play_game(state: GameState): void {
                 let from = -1;
                     if (!onBar) {
                         const input_point = prompt("From what point do you make a move?: ");
-                        from = Number(input_point);
+                        from = Number(input_point) - 1;
                 } else {
                     console.log("You have stones on the bar.");
                 }
