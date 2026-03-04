@@ -18,7 +18,34 @@ if (real_answer === "yes") {
 } else {
     console.log("Goodbye!");
 }
-
+/**
+ * Runs the main game loop for the backgammon game.
+ *
+ * The function repeatedly alternates turns between players until the
+ * game_over() condition is met. At the beginning of each turn the dice
+ * are rolled, after which the current player performs their moves.
+ *
+ * The loop continues until one player has borne off all 15 stones.
+ *
+ * @example
+ * play_game(starting_board())
+ * // Starts a full backgammon game and runs until a winner is determined.
+ *
+ * @param state The initial GameState used to start the game.
+ *
+ * @precondition
+ * - state must be a valid GameState.
+ * - The board must be correctly initialized.
+ * - make_move() must correctly perform player or bot moves.
+ *
+ * @complexity
+ * Time: O(T), where T is the number of turns played until the game ends.
+ * Space: O(1), since the game state is updated in place.
+ *
+ * @returns
+ * This function does not return a value (void).
+ * The game result is printed to the console.
+ */
 export function play_game(state: GameState): void {
     while (game_over(state) === null) {
         if (state.dice === null) {
