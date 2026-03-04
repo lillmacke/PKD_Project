@@ -12,8 +12,8 @@ import {
 export function evaluation(state: GameState): number {
     let evaluation = 0; 
 
-    evaluation += state.board.borne_off.black * 15; 
-    evaluation -= state.board.borne_off.white * 15;
+    evaluation += state.board.borne_off.black * 35; 
+    evaluation -= state.board.borne_off.white * 35;
     
     let black_made_points = 0;
     let white_made_points = 0;
