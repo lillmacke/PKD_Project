@@ -8,9 +8,36 @@ import {apply_move} from "../game_logic/moves";
 import {clone} from "./clone";
 import { evaluation } from "./Evaluation";
 
-//Hjälpfunktioner för att evaluera move-träd som tar tärningsordning i åtanke
-
-//Returnar lagliga move för en tärning
+/**
+ * Generates all legal moves for the current player using a single die value.
+ *
+ * The function checks every board point to determine whether a move is
+ * valid with the specified die. If the player has stones on the bar,
+ * only bar-entry moves are considered.
+ *
+ * @example
+ * legal_moves_one_die(state, 4)
+ * // Returns all valid moves that can be performed using die value 4.
+ *
+ * @param state The current game state.
+ * @param die The die value to test moves for.
+ *
+ * @precondition
+ * - state must be a valid GameState.
+ * - state.dice must not be null and should contain the current dice values.
+ * - die should be one of the remaining dice values.
+ *
+ * @complexity
+ * Time: O(n), where n = 24 board points.
+ * Space: O(k), where k is the number of legal moves generated.
+ *
+ * @returns
+ * An array of BotAction objects representing all legal moves
+ * the current player can perform using the given die.
+ * Each action contains:
+ * - from: the starting point (0–23) or -1 if entering from the bar
+ * - die: the die value used for the move
+ */
 export function legal_moves_one_die(state: GameState, 
                                     die: number): Array<BotAction> {
     const legal_actions: Array<BotAction> = []; 
@@ -37,16 +64,40 @@ export function legal_moves_one_die(state: GameState,
     return legal_actions;
 }
 
-//Simulerar alla move-sekvenser för en specifik tärningsorder
-//returnerar en array av {sequence: BotAction[], final_state: Gamestate}. 
 /**
- * 
- * @example 
- * @param state 
- * @param dice_order 
+ * Simulates all legal move sequences for a specific dice order.
+ *
+ * Given an ordered list of dice values (e.g. [6,3]), the function explores
+ * all legal moves for the first die, then all legal moves for the second die,
+ * and so on, producing every possible move sequence and its resulting final state.
+ *
+ * If no legal move exists for a given die at some step, that die is skipped
+ * and the search continues with the next die value.
+ *
+ * @example
+ * sim_seq_order(state, [6, 3])
+ * // Returns all legal sequences where die 6 is used first, then die 3.
+ *
+ * sim_seq_order(state, [4, 4, 4, 4])
+ * // Returns all legal sequences for a double roll in the given order.
+ *
+ * @param state The starting game state.
+ * @param dice_order An ordered list of die values (length 1–4).
+ *
  * @precondition
+ * - state must be a valid GameState.
+ * - dice_order must contain values in the range 1–6.
+ *
  * @complexity
- * @returns 
+ * Time: Exponential in the number of dice due to branching.
+ * Let b be the average number of legal moves for a die (0 ≤ b ≤ 24),
+ * and d = dice_order.length (≤ 4). Worst-case complexity is O(b^d).
+ * Space: O(b^d) for storing all resulting sequences and states.
+ *
+ * @returns
+ * An array of objects where each object contains:
+ * - sequence: the list of BotAction moves performed in order
+ * - final_state: the GameState after applying the entire sequence
  */
 export function sim_seq_order(state: GameState, dice_order: Array<number>) {
     const results: Array<{sequence: Array<BotAction>; 
@@ -78,6 +129,44 @@ export function sim_seq_order(state: GameState, dice_order: Array<number>) {
     legal_state(clone(state), 0, []);
     return results;
 }
+
+/**
+ * Chooses the best move sequence for the current player based on the current dice.
+ *
+ * The function simulates all legal move sequences and selects the sequence
+ * that results in the highest evaluation score.
+ *
+ * Dice handling:
+ * - If there are exactly 2 dice values (non-double roll), the function evaluates
+ *   both possible play orders: [die1, die2] and [die2, die1].
+ * - If there is 1 die value or more than 2 values (e.g. doubles -> 4 dice),
+ *   the function simulates sequences using the dice list as given.
+ *
+ * @example
+ * const seq = choose_best_move_by_order(state);
+ * if (seq) {
+ *   for (const action of seq) {
+ *     check_move(state, action.from, action.die);
+ *   }
+ * }
+ *
+ * @param state The current game state. Must contain non-null dice values.
+ *
+ * * @precondition
+ * - state must be a valid GameState.
+ * - state.dice must not be null and must contain at least one die value.
+ * - sim_seq_order() must correctly generate legal sequences.
+ * - evaluation() must return higher values for better positions for the bot.
+ *
+ * @complexity
+ * Time: Dominated by sim_seq_order(). Exponential in dice length due to branching.
+ * For two dice, it computes two sequence sets (two orders) and compares them.
+ * Space: O(number of generated sequences) to store all sequences and final states.
+ *
+ * @returns
+ * - A BotAction[] representing the best sequence of moves for this turn.
+ * - null if no legal sequences exist (i.e. the player must pass).
+ */
 
 export function choose_best_move_by_order(
             state: GameState): Array<BotAction> | null {
