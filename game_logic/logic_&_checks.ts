@@ -1,4 +1,40 @@
 import {Board, Player, GameState} from "../game_logic/types";
+import {is_valid_move, is_valid_move_bar} from "./valid_move";
+import {apply_move, apply_move_bar} from "./moves";
+
+export function check_move(state: GameState, 
+                           from: number, die: number): boolean {
+    const player = state.current_player;
+    const onBar = stones_on_bar(state.board, player);
+
+    if (onBar) {
+        const dest = player === "white" ? die - 1 : 24 - die;
+
+        if (!is_valid_move_bar(state, dest)) {
+            console.log("Invalid bar move.");
+            return false;
+        } else {}
+        apply_move_bar(state, die);
+    } else {
+        if (!is_valid_move(state, from, die)) {
+            console.log("Invalid move.");
+            return false;
+        } else {}
+        apply_move(state, from, die);
+    }
+ 
+    if (!remove_die(state, die)) {
+        console.log("Error: die was not available to remove.");
+        return false;
+    } else {}
+ 
+    if (state.dice && state.dice.values.length === 0) {
+        console.log("\nNext player\n");
+        switch_player(state);
+        state.dice = null;
+    } else {}
+    return true;
+}
 
 /**
  * Checks if the player has stones on the bar
@@ -191,6 +227,20 @@ export function borne_off(state: GameState, from: number): GameState {
     } else {}
     board.borne_off[state.current_player]++;
     return state;
+}
+
+export function remove_die(state: GameState, die: number): boolean {
+    if (!state.dice) {
+        return false;
+    } else {}
+
+    const index = state.dice.values.indexOf(die);
+    if (index === -1) {
+        return false;
+    } else {}
+
+    state.dice.values.splice(index, 1);
+    return true;
 }
 
 export function switch_player(state: GameState): void {

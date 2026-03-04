@@ -125,3 +125,24 @@ export function is_valid_move_bar(state: GameState, dest: number): boolean {
     }
     return true;
 }
+
+export function has_any_valid_moves(state: GameState): boolean {
+    const player = state.current_player;
+    const onBar = stones_on_bar(state.board, player);
+
+    if (!state.dice) {
+         return false;
+    } else {}
+
+    for (const die of state.dice.values) {
+        if (onBar) {
+            const dest = player === "white" ? die - 1 : 24 - die;
+            if (is_valid_move_bar(state, dest)) return true;
+            } else {
+            for (let from = 0; from < 24; from++) {
+                if (is_valid_move(state, from, die)) return true;
+            }
+        }
+    }
+    return false;
+}

@@ -2,21 +2,19 @@ import { starting_board } from "../game_logic/Starting_board";
 import {GameState} from "../game_logic/types";
 import {dice_roll} from "../game_logic/Dice";
 import {
-    stones_on_bar, switch_player, game_over
+    stones_on_bar, switch_player, game_over, check_move
 } from "../game_logic/logic_&_checks"
-import { is_valid_move, is_valid_move_bar } from "../game_logic/valid_move";
+import {
+    is_valid_move, is_valid_move_bar, has_any_valid_moves
+} from "../game_logic/valid_move";
 import {apply_move, apply_move_bar} from "../game_logic/moves";
 import {choose_best_move_by_order} from "./combo_sequence";
 import {render_board} from "../game_logic/UI";
 import promptSync from "prompt-sync";
 
 const prompt = promptSync({ sigint: true });
-
-
-console.log("Welcome to Backgammon!");
-
 const new_state = starting_board();
-
+console.log("Welcome to Backgammon!");
 const answer = prompt("Do you want to start a new game?: ");
 const real_answer = answer.toLowerCase();
 if (real_answer === "yes") {  
@@ -29,84 +27,13 @@ if (real_answer === "yes") {
 function play_game(state: GameState): void {
     const bot_player = "black";
 
-    function remove_die(state: GameState, die: number): boolean {
-        if (!state.dice) {
-            return false;
-        } else {}
-
-        const index = state.dice.values.indexOf(die);
-        if (index === -1) {
-            return false;
-        } else {}
-
-        state.dice.values.splice(index, 1);
-        return true;
-    }
-
-    function has_any_legal_move(state: GameState): boolean {
-        if (!state.dice) {
-            return false;
-        } else {}
-
-        const player = state.current_player;
-        const onBar = stones_on_bar(state.board, player);
-
-        for (const die of state.dice.values) {
-            if (onBar) {
-                const dest = player === "white" ? die - 1 : 24 - die;
-                if (is_valid_move_bar(state, dest)) return true;
-                } else {
-                for (let from = 0; from < 24; from++) {
-                    if (is_valid_move(state, from, die)) return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    function check_move(state: GameState, from: number, die: number): boolean {
-        const player = state.current_player;
-        const onBar = stones_on_bar(state.board, player);
-
-        if (onBar) {
-            const dest = player === "white" ? die - 1 : 24 - die;
-
-            if (!is_valid_move_bar(state, dest)) {
-                console.log("Invalid bar move.");
-                return false;
-            } else {}
-            apply_move_bar(state, die);
-        } else {
-            if (!is_valid_move(state, from, die)) {
-                console.log("Invalid move.");
-                return false;
-            } else {}
-            apply_move(state, from, die);
-        }
-
-        
-        if (!remove_die(state, die)) {
-            console.log("Error: die was not available to remove.");
-            return false;
-        } else {}
-
-        
-        if (state.dice && state.dice.values.length === 0) {
-            console.log("\nNext player\n");
-            switch_player(state);
-            state.dice = null;
-        } else {}
-
-        return true;
-    }
-
     function make_move(state: GameState): void {
         while (state.dice && state.dice.values.length > 0) {
             console.log(render_board(state));
             console.log("\nCurrent player:", state.current_player);
             console.log("Remaining dice:", state.dice.values.join(", "));
           
-            if (!has_any_legal_move(state)) {
+            if (!has_any_valid_moves(state)) {
                 console.log("No legal moves. Passing turn.\n");
                 switch_player(state);
                 state.dice = null;
