@@ -26,7 +26,7 @@ if (real_answer === "yes") {
     console.log("Goodbye!");
 }
 
-function play_game(state: GameState): void {
+export function play_game(state: GameState): void {
     const bot_player = "black";
 
     function remove_die(state: GameState, die: number): boolean {
