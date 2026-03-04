@@ -3,11 +3,37 @@ import {
  } from "../game_logic/types";
 
 /**
- * Tar in ett state och ger ett nummer för huruvida bra statet är för boten. 
- * Gåner 10 för stenar i mål
- * Gånger tre för stenar på baren
- * Poäng för 
+ * Evaluates a given game state and returns a heuristic score from
+ * the perspective of the black player.
+ *
+ * A higher score means the position is better for black,
+ * while a lower score means the position is better for white.
+ *
+ * The evaluation considers:
+ * - Stones borne off
+ * - Distance remaining to bear off
+ * - Single stones are penalized
+ * - Made points (positions with ≥2 stones that block the opponent)
+ *
+ * @example
+ * evaluation(state)
+ * // Returns a number representing how favorable the position is for black.
+ *
+ * @param state The current game state to evaluate.
+ *
+ * @precondition
+ * - state must be a valid GameState.
+ * - The board must contain exactly 24 points.
+ * - Stone counts and player ownership must be consistent.
+ *
+ * @complexity
+ * Time: O(n), where n = 24 board points.
+ * Space: O(1)
  * 
+ * @returns
+ * A numeric score:
+ * - Positive values favor black.
+ * - Negative values favor white.
  */
 export function evaluation(state: GameState): number {
     let evaluation = 0; 
