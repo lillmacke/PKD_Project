@@ -1,20 +1,52 @@
 import {Board, Player, GameState} from "../game_logic/types";
 
 /**
+ * Checks if the player has stones on the bar
  * 
- * @param board 
- * @param player 
+ * @example
+ * stones_on_bar(board, "white")
+ * // Returns true if white has at least one stone on the bar.
+ * 
+ * @param board Current game board
+ * @param player The player to check
+ * 
+ * @precondition
+ * - board must be a valid Board object.
+ * - player must be a valid Player value.
+ *
+ * @complexity
+ * Time: O(1)
+ * Space: O(1)
+ * 
  * @returns 
+ * true if the player has one or more stones on the bar.
+ * false otherwise.
  */
 export const stones_on_bar = (board: Board, player: Player): boolean =>
     board.bar[player] > 0;
 
 /**
- * Ska hitta punkter som endast har en sten, 
- * och kolla om den tillhör motståndaren
- * @param state 
- * @param index 
- * @returns 
+ * Checks whether a point contains a single opponent stone.
+ * Such a stone can be hit and sent to the bar.
+ * 
+ * @example
+ * find_single(state, 8)
+ * // Returns true if point 8 contains a single opponent stone. 
+ * 
+ * @param state Current game state
+ * @param index The board index to check
+ * 
+ * @precondition
+ * - state must be a valid GameState object.
+ * - index must be within board bounds.
+ * 
+ * @complexity
+ * Time: O(1)
+ * Space: O(1)
+ *
+ * @returns
+ * true if the point contains exactly one opponent stone.
+ * false otherwise.
  */
 export function find_single(state: GameState, index: number): boolean {
     const point = state.board.points[index];
