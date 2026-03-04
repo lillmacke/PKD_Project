@@ -134,6 +134,42 @@ export function apply_move_bar(state: GameState, die: number): GameState {
     return state;
 }
 
+/**
+ * Executes an entire turn for the current player until all remaining dice
+ * have been used or no legal moves exist.
+ *
+ * The function supports both human input and a bot player.
+ * During the turn it repeatedly:
+ * - Prints the board and remaining dice.
+ * - Checks if the current player has any legal moves; if none, the player passes.
+ * - If the current player is the bot, it chooses a best move sequence and applies it.
+ * - If the current player is human, it asks for die choice and move origin and applies it.
+ *
+ * The function consumes dice via check_move(), and when the dice list becomes empty,
+ * the turn ends (check_move() is responsible for switching player and resetting dice).
+ *
+ * @example
+ * make_move(state)
+ * // Runs a full turn for the current player using current dice values.
+ *
+ * @param state The current game state (mutated in place).
+ *
+ * @precondition
+ * - state must be a valid GameState.
+ * - state.dice must not be null when entering the while-loop.
+ * - check_move() must correctly validate/apply moves and remove used dice.
+ * - choose_best_move_by_order() must return legal BotAction sequences for the bot.
+ * 
+ * @complexity
+ * Time: Depends on number of dice (≤ 4) and user/bot logic.
+ * - Human branch: bounded by user attempts; each validation is O(24) worst-case.
+ * - Bot branch: dominated by move-sequence simulation in choose_best_move_by_order().
+ * Space: O(1) for the game loop itself (bot simulation may allocate additional memory).
+ *
+ * @returns
+ * This function does not return a value (void).
+ * It updates the GameState directly (moves pieces, consumes dice, and may switch player).
+ */
 export function make_move(state: GameState): void {
     const bot_player = "black";
     while (state.dice && state.dice.values.length > 0) {
