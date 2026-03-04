@@ -124,7 +124,37 @@ export function is_valid_move_bar(state: GameState, dest: number): boolean {
     }
     return true;
 }
-
+/**
+ * Checks whether the current player has at least one valid move
+ * available with the remaining dice.
+ *
+ * The function iterates through all remaining dice values and
+ * determines if any legal move can be performed. If the player
+ * has stones on the bar, only bar-entry moves are considered.
+ *
+ * @example
+ * has_any_valid_moves(state)
+ * // Returns true if the current player can perform at least one move
+ * // using any of the remaining dice.
+ *
+ * @param state The current game state.
+ *
+ * @precondition
+ * - state must be a valid GameState.
+ * - state.dice must not be null.
+ * - state.dice.values must contain the remaining dice for the turn.
+ *
+ * @complexity
+ * Time: O(d * p) where
+ * - d ≤ 4 (number of dice)
+ * - p = 24 (board points)
+ *
+ * Space: O(1)
+ *
+ * @returns
+ * - true if at least one valid move exists for the current player.
+ * - false if the player has no legal moves and must pass the turn.
+ */
 export function has_any_valid_moves(state: GameState): boolean {
     const player = state.current_player;
     const onBar = stones_on_bar(state.board, player);
