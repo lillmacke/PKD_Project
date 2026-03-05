@@ -28,7 +28,7 @@ const WinState : GameState = {
     points: [
       { player: "black", count: 1 }, 
       { player: null, count: 0 },   
-      { player: null, count: 0 },   
+      { player: "black", count: 1 },   
       { player: null, count: 0 },   
       { player: null, count: 0 },   
       { player: null, count: 0 },   
@@ -59,7 +59,7 @@ const WinState : GameState = {
 
     borne_off: {
       white: 0,
-      black: 14
+      black: 13
     }
   }
 }; 
