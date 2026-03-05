@@ -318,7 +318,53 @@ test("Bot enters from bar when it has a checker on the bar", () => {
 });
 
 
-//Test 6 Bot chooses correct dice order
+//Test 6 Bot handles doubles
+const GameState_6: GameState = {
+  current_player: "black",
+  dice: { values: [2, 2, 2, 2] },
+  board: {
+    points: [
+      { player: null, count: 0 }, 
+      { player: null, count: 0 },
+      { player: null, count: 0 }, 
+      { player: null, count: 0 }, 
+      { player: null, count: 0 }, 
+      { player: null, count: 0 },
+      { player: null, count: 0 }, 
+      { player: null, count: 0 }, 
+      { player: null, count: 0 },
+      { player: null, count: 0 },
+      { player: null, count: 0 }, 
+      { player: "black", count: 1 }, 
+      { player: null, count: 0 }, 
+      { player: null, count: 0 }, 
+      { player: null, count: 0 }, 
+      { player: null, count: 0 }, 
+      { player: null, count: 0 }, 
+      { player: null, count: 0 }, 
+      { player: null, count: 0 }, 
+      { player: null, count: 0 }, 
+      { player: null, count: 0 },
+      { player: null, count: 0 }, 
+      { player: null, count: 0 }, 
+      { player: null, count: 0 }  
+    ],
+    bar: { white: 0, black: 0 },
+    borne_off: { white: 0, black: 0 }
+  }
+};
 
+test("Bot uses double correctly", () => {
+  let state = clone(GameState_6);
 
-//Test 7 Bot handles doubles
+  const moves = choose_best_move_by_order(state);
+  expect(moves).not.toBeNull();
+  expect(moves!.length).toBeGreaterThan(0);
+
+  for (const m of moves!) {
+    state = apply_move(state, m.from, m.die);
+  }
+
+  expect(state.board.points[3].player).toBe("black");
+  expect(state.board.points[3].count).toBeGreaterThan(0);
+});
