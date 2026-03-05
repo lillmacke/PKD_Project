@@ -1,22 +1,22 @@
 import { 
     legal_moves_one_die,  sim_seq_order, choose_best_move_by_order
- } from "../PKD_Project/Backgammon bot/combo_sequence";
+ } from "./Backgammon bot/combo_sequence";
 import { 
     clone
-} from "../PKD_Project/Backgammon bot/clone";
+} from "./Backgammon bot/clone";
 
  import{
     GameState
- } from "../game_logic/types";
+ } from "./game_logic/types";
 
- import { starting_board } from "../game_logic/Starting_board";
+ import { starting_board } from "./game_logic/Starting_board";
 
-import {dice_roll} from "../game_logic/Dice";
+import {dice_roll} from "./game_logic/Dice";
 
 import { stones_on_bar, switch_player,
-    game_over} from "../game_logic/logic_&_checks"
+    game_over} from "./game_logic/logic_&_checks"
 
-import {apply_move, apply_move_bar} from "../game_logic/moves";
+import {apply_move, apply_move_bar} from "./game_logic/moves";
 
 
 
