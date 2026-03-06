@@ -1,3 +1,4 @@
+import { pid } from "node:process";
 import {
     GameState
  } from "../game_logic/types";
@@ -39,8 +40,21 @@ export function evaluation(state: GameState): number {
     let evaluation = 0; 
 
     evaluation += state.board.borne_off.black * 35; 
-    evaluation -= state.board.borne_off.white * 35;
-    evaluation += state.board.bar.white * 10
+   
+
+    for (let i = 0; i < 18; i++){
+        const point = state.board.points[i];
+        if (point.player === "white" && point.count === 1){
+            evaluation -= i + 6;
+        }
+    }
+
+    for (let i = 18; i < 24; i++){
+        const point = state.board.points[i];
+        if (point.player === "white" && point.count === 1){
+            evaluation -= 50;
+        }
+    }
     
     let black_made_points = 0;
     let white_made_points = 0;
