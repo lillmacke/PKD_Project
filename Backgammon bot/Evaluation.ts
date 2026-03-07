@@ -56,8 +56,7 @@ export function evaluation(state: GameState): number {
         }
     }
     
-    let black_made_points = 0;
-    let white_made_points = 0;
+   
 
     for (let i = 6; i < 24; i++){
         const point = state.board.points[i];
@@ -71,7 +70,7 @@ export function evaluation(state: GameState): number {
 
             //Points där svarta har minst 2 stenar
             if (point.count >= 2) {
-                black_made_points++;
+                evaluation += (30- i) * point.count;
             }
         }
     }
@@ -87,14 +86,13 @@ export function evaluation(state: GameState): number {
 
             //Points där svarta har minst 2 stenar
             if (point.count >= 2) {
-                black_made_points++;
+                evaluation +=  50 * point.count;
             }
         }
     }
 
     
 
-    //Skillnaden i antal points där svart och vit har stenar fler än 1
-    evaluation += 2 * (black_made_points - white_made_points);
+    
     return evaluation;
 }
