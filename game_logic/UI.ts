@@ -4,6 +4,7 @@ import { GameState, Point } from "./types";
 // REPRESENTATION OF OUR GAME, AND DID NOT WANT TO TAKE TIME 
 // OUT OF DEVELOPING THE BOT TO IMPLEMENT AN AI, SINCE THIS WILL NOT 
 // BE GRADED. THIS HAS BEEN APPROVED OF ALL GROUP MEMBERS. 
+
 /**
  * Centers a given text string within a fixed width by adding spaces
  * to the left and right of the text.
@@ -224,10 +225,9 @@ function render_cell(point: Point, level: number): string {
 
     if (count >= level && player === "black") {
         return " B ";
-    }
+    } else {}
     return "   ";
 }
-
 
 /**
  * Computes the maximum stack height among all points on the board.

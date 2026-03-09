@@ -1,7 +1,5 @@
 import { pid } from "node:process";
-import {
-    GameState
- } from "../game_logic/types";
+import { GameState } from "../game_logic/types";
 
 /**
  * Evaluates a given game state and returns a heuristic score from
@@ -38,7 +36,6 @@ import {
  */
 export function evaluation(state: GameState): number {
     let evaluation = 0; 
-
     evaluation += state.board.borne_off.black * 35; 
     
     for (let i = 0; i < 18; i++) {
@@ -47,37 +44,39 @@ export function evaluation(state: GameState): number {
             evaluation -= i + 6;
         } else {}
     }
+
     for (let i = 18; i < 24; i++) {
         const point = state.board.points[i];
         if (point.player === "white" && point.count === 1) {
             evaluation -= 50;
         } else {}
     }
+
     for (let i = 6; i < 24; i++) {
         const point = state.board.points[i];
         if (point.player === "black") {
-            // Antal steg kvar för en sten att kunna bli borne off
-            evaluation += (30 - i) * point.count
-            // Sten som står själv
+            //Number of steps left for a stone to be borne off
+            evaluation += (30 - i) * point.count;
+            //Point with only one stone
             if (point.count === 1) {
                 evaluation -= (30 - i);
             } else {}
-            //Points där svarta har minst 2 stenar
+            //Points where black has at least two stones
             if (point.count >= 2) {
                 evaluation += (30- i) * point.count;
             } else {}
         } else {}
     }
-    for(let i = 0; i < 6; i++) {
+    for (let i = 0; i < 6; i++) {
         const point = state.board.points[i];
          if (point.player === "black") {
-            // Antal steg kvar för en sten att kunna bli borne off
-            evaluation += point.count
-            // Sten som står själv
+            //Number of steps left for a stone to be borne off
+            evaluation += point.count;
+            //Point with only one stone
             if (point.count === 1) {
                 evaluation -= 50;
             } else {}
-            //Points där svarta har minst 2 stenar
+            //Points where black has at least two stones
             if (point.count >= 2) {
                 evaluation +=  50 * point.count;
             } else {}

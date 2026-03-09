@@ -47,8 +47,8 @@ export function starting_board(): GameState {
 
     const board : Board = {
         points: points,
-        bar: {"white" : 0, "black" : 0}, 
-        borne_off: {"white" : 0, "black" : 0}
+        bar: {"white": 0, "black": 0}, 
+        borne_off: {"white": 0, "black": 0}
     };
 
     const gamestate : GameState = {

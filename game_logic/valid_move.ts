@@ -1,6 +1,5 @@
-import {GameState} from "./types";
-import {stones_on_bar, all_stones_home, can_bear_off} from "./logic_&_checks";
-
+import { GameState } from "./types";
+import { stones_on_bar, all_stones_home, can_bear_off } from "./logic_&_checks";
 
 /**
  * Checks if a move is valid according to the rules
@@ -73,14 +72,15 @@ export function is_valid_move(state: GameState,
     } else if (player === "white" && 
         point[dest].player === "black" && point[dest].count > 1) {
         return false;             
-    }
+    } else {}
     return true;
 }
 
 /**
  * Checks whether entering a stone from bar is a valid move
  * 
- * A player must enter from the bar before making any other move (if player has a stone on the bar).
+ * A player must enter from the bar before making any other move 
+ * (if player has a stone on the bar).
  * This function verifies:
  * - Destination point is within board bounds (0-23)
  * - The destination point is not blocked by two or more opponent stones.
@@ -116,14 +116,14 @@ export function is_valid_move_bar(state: GameState, dest: number): boolean {
 
     if (player === "black" && 
         points[dest].player === "white" && points[dest].count > 1) {
-        return false; 
-                      
+        return false;                
     } else if (player === "white" && 
         points[dest].player === "black" && points[dest].count > 1) {
         return false;             
-    }
+    } else {}
     return true;
 }
+
 /**
  * Checks whether the current player has at least one valid move
  * available with the remaining dice.
@@ -166,8 +166,10 @@ export function has_any_valid_moves(state: GameState): boolean {
     for (const die of state.dice.values) {
         if (onBar) {
             const dest = player === "white" ? die - 1 : 24 - die;
-            if (is_valid_move_bar(state, dest)) return true;
-            } else {
+            if (is_valid_move_bar(state, dest)) {
+                return true;
+            } else {} 
+        } else {
             for (let from = 0; from < 24; from++) {
                 if (is_valid_move(state, from, die)) return true;
             }

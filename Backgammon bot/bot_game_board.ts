@@ -1,11 +1,11 @@
-import {starting_board} from "../game_logic/Starting_board";
-import {GameState} from "../game_logic/types";
-import {dice_roll} from "../game_logic/Dice";
-import {game_over} from "../game_logic/logic_&_checks"
-import {make_move} from "../game_logic/moves";
+import { starting_board } from "../game_logic/Starting_board";
+import { GameState } from "../game_logic/types";
+import { dice_roll } from "../game_logic/Dice";
+import { game_over } from "../game_logic/logic_&_checks"
+import { make_move } from "../game_logic/moves";
 import promptSync from "prompt-sync";
 
-const prompt = promptSync({ sigint: true });
+const prompt = promptSync({sigint: true});
 const new_state = starting_board();
 
 console.log("Welcome to Backgammon!");
@@ -18,6 +18,7 @@ if (real_answer === "yes") {
 } else {
     console.log("Goodbye!");
 }
+
 /**
  * Runs the main game loop for the backgammon game.
  *
