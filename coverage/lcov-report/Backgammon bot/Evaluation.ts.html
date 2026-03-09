@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">96.87% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>27/27</span>
+                <span class='fraction'>31/32</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">95% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>12/12</span>
+                <span class='fraction'>19/20</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">96.42% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>25/25</span>
+                <span class='fraction'>27/28</span>
             </div>
         
             
@@ -148,7 +148,17 @@
 <a name='L83'></a><a href='#L83'>83</a>
 <a name='L84'></a><a href='#L84'>84</a>
 <a name='L85'></a><a href='#L85'>85</a>
-<a name='L86'></a><a href='#L86'>86</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -189,11 +199,22 @@
 <span class="cline-any cline-yes">47x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">47x</span>
-<span class="cline-any cline-yes">47x</span>
-<span class="cline-any cline-yes">47x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">47x</span>
+<span class="cline-any cline-yes">846x</span>
+<span class="cline-any cline-yes">846x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">47x</span>
+<span class="cline-any cline-yes">282x</span>
+<span class="cline-any cline-yes">282x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">47x</span>
 <span class="cline-any cline-yes">846x</span>
@@ -203,7 +224,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">125x</span>
 <span class="cline-any cline-yes">64x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">125x</span>
@@ -221,7 +241,6 @@
 <span class="cline-any cline-yes">30x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">32x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -232,8 +251,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">47x</span>
-<span class="cline-any cline-yes">47x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { pid } from "node:process";
+import {
     GameState
  } from "../game_logic/types";
 &nbsp;
@@ -274,11 +293,22 @@ export function evaluation(state: GameState): number {
     let evaluation = 0; 
 &nbsp;
     evaluation += state.board.borne_off.black * 35; 
-    evaluation -= state.board.borne_off.white * 35;
-    evaluation += state.board.bar.white * 10
     
-    let black_made_points = 0;
-    let white_made_points = 0;
+    for (let i = 0; i &lt; 18; i++){
+        const point = state.board.points[i];
+        if (point.player === "white" &amp;&amp; point.count === 1){
+            evaluation -= i + 6;
+        }
+    }
+&nbsp;
+    for (let i = 18; i &lt; 24; i++){
+        const point = state.board.points[i];
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (point.player === "white" &amp;&amp; point.count === 1){
+<span class="cstat-no" title="statement not covered" >            evaluation -= 50;</span>
+        }
+    }
+    
+   
 &nbsp;
     for (let i = 6; i &lt; 24; i++){
         const point = state.board.points[i];
@@ -289,10 +319,9 @@ export function evaluation(state: GameState): number {
             if (point.count === 1) {
                 evaluation -= (30 - i);
             } else {}
-&nbsp;
             //Points där svarta har minst 2 stenar
             if (point.count &gt;= 2) {
-                black_made_points++;
+                evaluation += (30- i) * point.count;
             }
         }
     }
@@ -300,23 +329,21 @@ export function evaluation(state: GameState): number {
         const point = state.board.points[i];
          if (point.player === "black") {
             // Antal steg kvar för en sten att kunna bli borne off
-            evaluation += (1) * point.count
+            evaluation += point.count
             // Sten som står själv
             if (point.count === 1) {
                 evaluation -= 50;
             } else {}
-&nbsp;
             //Points där svarta har minst 2 stenar
             if (point.count &gt;= 2) {
-                black_made_points++;
+                evaluation +=  50 * point.count;
             }
         }
     }
 &nbsp;
     
 &nbsp;
-    //Skillnaden i antal points där svart och vit har stenar fler än 1
-    evaluation += 2 * (black_made_points - white_made_points);
+    
     return evaluation;
 }</pre></td></tr></table></pre>
 
@@ -325,7 +352,7 @@ export function evaluation(state: GameState): number {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-05T16:55:27.834Z
+                at 2026-03-07T18:19:21.635Z
             </div>
         <script src="../prettify.js"></script>
         <script>

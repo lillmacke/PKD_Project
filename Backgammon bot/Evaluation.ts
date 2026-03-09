@@ -40,59 +40,48 @@ export function evaluation(state: GameState): number {
     let evaluation = 0; 
 
     evaluation += state.board.borne_off.black * 35; 
-   
-
-    for (let i = 0; i < 18; i++){
-        const point = state.board.points[i];
-        if (point.player === "white" && point.count === 1){
-            evaluation -= i + 6;
-        }
-    }
-
-    for (let i = 18; i < 24; i++){
-        const point = state.board.points[i];
-        if (point.player === "white" && point.count === 1){
-            evaluation -= 50;
-        }
-    }
     
-   
-
-    for (let i = 6; i < 24; i++){
+    for (let i = 0; i < 18; i++) {
+        const point = state.board.points[i];
+        if (point.player === "white" && point.count === 1) {
+            evaluation -= i + 6;
+        } else {}
+    }
+    for (let i = 18; i < 24; i++) {
+        const point = state.board.points[i];
+        if (point.player === "white" && point.count === 1) {
+            evaluation -= 50;
+        } else {}
+    }
+    for (let i = 6; i < 24; i++) {
         const point = state.board.points[i];
         if (point.player === "black") {
             // Antal steg kvar för en sten att kunna bli borne off
-            evaluation -= (i + 1) * point.count
+            evaluation += (30 - i) * point.count
             // Sten som står själv
             if (point.count === 1) {
                 evaluation -= (30 - i);
             } else {}
-
             //Points där svarta har minst 2 stenar
             if (point.count >= 2) {
                 evaluation += (30- i) * point.count;
-            }
-        }
+            } else {}
+        } else {}
     }
-    for( let i = 0; i < 6; i++ ){
+    for(let i = 0; i < 6; i++) {
         const point = state.board.points[i];
          if (point.player === "black") {
             // Antal steg kvar för en sten att kunna bli borne off
-            evaluation += (1) * point.count
+            evaluation += point.count
             // Sten som står själv
             if (point.count === 1) {
                 evaluation -= 50;
             } else {}
-
             //Points där svarta har minst 2 stenar
             if (point.count >= 2) {
                 evaluation +=  50 * point.count;
-            }
-        }
-    }
-
-    
-
-    
+            } else {}
+        } else {}
+    }    
     return evaluation;
 }
