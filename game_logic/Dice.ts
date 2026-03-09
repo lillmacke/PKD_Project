@@ -8,8 +8,8 @@ import {Dice} from "./types";
  * 
  * @example 
  * const roll = dice_roll()
- * { values : [3, 5] }
- * { values : [4, 4, 4, 4] }
+ * {values: [3, 5]}
+ * {values: [4, 4, 4, 4]}
  * 
  * @param None 
  * 
