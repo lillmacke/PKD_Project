@@ -212,7 +212,7 @@ export function choose_best_move_by_order(
     let best = all_seq[0];
     let best_score = evaluation(best.final_state);
     for (let i = 1; i < all_seq.length; i++) {
-        const score = evaluation(all_seq[i].final_state);
+        const score = evaluation(all_seq[i].final_state);   
         if (score > best_score) {
             best_score = score;
             best = all_seq[i];
