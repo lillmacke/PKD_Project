@@ -1,6 +1,9 @@
-import {GameState, Point} from "./types";
+import { GameState, Point } from "./types";
 
-
+// THIS MODULE IS 100% CREATED BY AI (CHATGPT). WE WANTED A VISUAL
+// REPRESENTATION OF OUR GAME, AND DID NOT WANT TO TAKE TIME 
+// OUT OF DEVELOPING THE BOT TO IMPLEMENT AN AI, SINCE THIS WILL NOT 
+// BE GRADED. THIS HAS BEEN APPROVED OF ALL GROUP MEMBERS. 
 /**
  * Centers a given text string within a fixed width by adding spaces
  * to the left and right of the text.
@@ -72,7 +75,6 @@ function render_number_row(numbers: Array<number>): string {
                     .join("");
     return ` ${left_part}  ${right_part} `;
 }
-
 
 /**
  * Renders multiple visual rows for one half of the backgammon board

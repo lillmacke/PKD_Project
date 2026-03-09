@@ -1,7 +1,6 @@
-import {Board, Player, GameState} from "../game_logic/types";
-import {is_valid_move, is_valid_move_bar} from "./valid_move";
-import {apply_move, apply_move_bar} from "./moves";
-
+import { Board, Player, GameState } from "../game_logic/types";
+import { is_valid_move, is_valid_move_bar } from "./valid_move";
+import { apply_move, apply_move_bar } from "./moves";
 
 /**
  * Attempts to perform a move for the current player using a given die.
@@ -19,7 +18,8 @@ import {apply_move, apply_move_bar} from "./moves";
  * // Returns true if the move is applied, false otherwise.
  *
  * @param state The current game state.
- * @param from The board index to move from. Ignored if the player has stones on the bar.
+ * @param from The board index to move from. 
+ *          Ignored if the player has stones on the bar.
  * @param die The die value to use for the move.
  *
  * @precondition
@@ -42,7 +42,6 @@ export function check_move(state: GameState,
 
     if (onBar) {
         const dest = player === "white" ? die - 1 : 24 - die;
-
         if (!is_valid_move_bar(state, dest)) {
             console.log("Invalid bar move.");
             return false;
@@ -297,12 +296,12 @@ export function higher_stone_in_home(state: GameState, from: number): boolean {
     return false;
 }
 
-
 /**
  * Checks whether a stone may be borne off from a given point using a die value.
  *
  * Bearing off rules:
- * - A stone may be borne off if the die exactly matches the distance to off-board.
+ * - A stone may be borne off if the die 
+ *      exactly matches the distance to off-board.
  * - If the die is larger than the exact distance, bearing off is only allowed
  *   if there are no stones on higher points in the home board.
  *

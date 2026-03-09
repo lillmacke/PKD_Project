@@ -30,11 +30,11 @@ export type GameState = {
     dice: Dice | null; //if dice === null, dice not rolled yet 
 }
  
-export type move = {
-    state: GameState
-    from: number
-    die: number
-}
+//export type move = {
+//    state: GameState
+//    from: number
+//    die: number
+//}
 
 export type BotAction = {
     from: number; //-1 represents moving from the bar

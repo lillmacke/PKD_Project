@@ -1,4 +1,4 @@
-import {Dice} from "./types";
+import { Dice } from "./types";
 
 /**
  * Randomizes two dice rolls to the game

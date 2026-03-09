@@ -1,4 +1,4 @@
-import {GameState, Point, Board} from "./types";
+import { GameState, Point, Board } from "./types";
 
 /**
  * Creates the starting board for the backgammon game
@@ -33,13 +33,13 @@ export function starting_board(): GameState {
     for (let i = 0; i < 24; i++) {
         points.push({player: null, count: 0});
     }
-    // Ändrar så vita stenar hamnar rätt vid startläge
+    // Puts white stones in right starting position
     points[0]  = {player: "white", count: 2};
     points[11] = {player: "white", count: 5};
     points[16] = {player: "white", count: 3};
     points[18] = {player: "white", count: 5};
     
-    // Ändrar så svarta stenar hamnar rätt vid startläge
+    // Puts back stones in right starting position
     points[23] = {player: "black", count: 2};
     points[12] = {player: "black", count: 5};
     points[7]  = {player: "black", count: 3};
