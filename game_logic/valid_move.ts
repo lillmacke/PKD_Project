@@ -1,37 +1,6 @@
 import { GameState } from "./types";
 import { stones_on_bar, all_stones_home, can_bear_off } from "./logic_&_checks";
 
-/**
- * Checks if a move is valid according to the rules
- * 
- * The function verifies:
- * - Player has no stones on bar
- * - Starting point is within board bounds
- * - Starting point contatins at least one stone belonging to the current player
- * - Destination point is legal
- * - Bearing off is only allowed if all stones are in the home board.
- * 
- * @example
- * is_valid_move(state, 12, 3)
- * // Returns true if the current player can move from point 12 using die 3.
- * 
- * @param state The current game state
- * @param from The board index from which the stone is moved
- * @param die The die value to use for the move
- * 
- * @precondition 
- * State must be a valid GameState object
- * Die must be a valid dice value
- * state.current_player must be correctly set
- * 
- * @complexity
- * Time: O(1)
- * Space: O(1)
- * 
- * @returns 
- * true if the move is legal
- * false otherwise
- */
 export function is_valid_move(state: GameState, 
                               from: number, die: number): boolean {
     const player = state.current_player;
@@ -76,36 +45,6 @@ export function is_valid_move(state: GameState,
     return true;
 }
 
-/**
- * Checks whether entering a stone from bar is a valid move
- * 
- * A player must enter from the bar before making any other move 
- * (if player has a stone on the bar).
- * This function verifies:
- * - Destination point is within board bounds (0-23)
- * - The destination point is not blocked by two or more opponent stones.
- * 
- * @example
- *  * is_valid_move_bar(state, 22)
- * // Returns true if the current player can enter from the bar to point 22.
- * 
- * @param state The current game state
- * @param dest The board index where the stone would enter
- * 
- * @precondition
- * state must be a valid GameState object.
- * state.current_player must have at least one stone on the bar.
- * dest must be calculated correctly based on die value.
- * 
- * @complexity
- * Time: O(1)
- * Space: O(1)
- * 
- * @returns 
- * true if the bar entry move is legal
- * false otherwise
- */
-
 export function is_valid_move_bar(state: GameState, dest: number): boolean {
     const points = state.board.points;
     const player = state.current_player;
@@ -124,37 +63,6 @@ export function is_valid_move_bar(state: GameState, dest: number): boolean {
     return true;
 }
 
-/**
- * Checks whether the current player has at least one valid move
- * available with the remaining dice.
- *
- * The function iterates through all remaining dice values and
- * determines if any legal move can be performed. If the player
- * has stones on the bar, only bar-entry moves are considered.
- *
- * @example
- * has_any_valid_moves(state)
- * // Returns true if the current player can perform at least one move
- * // using any of the remaining dice.
- *
- * @param state The current game state.
- *
- * @precondition
- * - state must be a valid GameState.
- * - state.dice must not be null.
- * - state.dice.values must contain the remaining dice for the turn.
- *
- * @complexity
- * Time: O(d * p) where
- * - d ≤ 4 (number of dice)
- * - p = 24 (board points)
- *
- * Space: O(1)
- *
- * @returns
- * - true if at least one valid move exists for the current player.
- * - false if the player has no legal moves and must pass the turn.
- */
 export function has_any_valid_moves(state: GameState): boolean {
     const player = state.current_player;
     const onBar = stones_on_bar(state.board, player);

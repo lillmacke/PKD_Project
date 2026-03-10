@@ -2,37 +2,18 @@ import { pid } from "node:process";
 import { GameState } from "../game_logic/types";
 
 /**
- * Evaluates a given game state and returns a heuristic score from
- * the perspective of the black player.
- *
- * A higher score means the position is better for black,
- * while a lower score means the position is better for white.
- *
- * The evaluation considers:
+ * Evaluate takes a gamestate and checks following things:
  * - Stones borne off
  * - Distance remaining to bear off
  * - Single stones are penalized
  * - Made points (positions with ≥2 stones that block the opponent)
  *
- * @example
- * evaluation(state)
- * // Returns a number representing how favorable the position is for black.
- *
- * @param state The current game state to evaluate.
- *
- * @precondition
- * - state must be a valid GameState.
- * - The board must contain exactly 24 points.
- * - Stone counts and player ownership must be consistent.
- *
- * @complexity
- * Time: O(n), where n = 24 board points.
- * Space: O(1)
- * 
- * @returns
- * A numeric score:
- * higher values favor black.
- * 
+ * @example - A gamestate with one black in the home and on white unguarded will
+ * give the number -20. 
+ * @param state - The current game state to evaluate.
+ * @precondition - state must be a valid GameState.
+ * @complexity - O(n). 
+ * @returns - A number, higher values favor black.
  */
 export function evaluation(state: GameState): number {
     let evaluation = 0; 

@@ -12,37 +12,6 @@ import promptSync from "prompt-sync";
 
 const prompt = promptSync({sigint: true});
 
-/**
- * Executes a legal board move according to Backgammon rules.
- *
- * The function:
- * - Checks if the player must enter from the bar first.
- * - Validates the move using is_valid_move().
- * - Handles bearing off if the move goes off the board.
- * - Handles hitting an opponent blot (single stone).
- * - Updates the board state accordingly.
- *
- * @example 
- * apply_move(state, 12, 3)
- * Moves a stone from point 12 using die value 3 if legal.
- * 
- * @param state The current GameState
- * @param from The board index from which the stone is moved.
- * @param die The die value used for the move.
- * 
- * @precondition 
- * - state must be a valid GameState.
- * - state.current_player must be correctly set.
- * - If the player has stones on the bar, bar entry must be handled first.
- * 
- * @complexity
- * Time: O(1)
- * Space: O(1)
- * 
- * @returns
- * The updated game state after the move is applied.
- * If the move is invalid, the original state is returned unchanged.
- */
 export function apply_move(state: GameState, from: number, 
                            die: number): GameState {
     const player = state.current_player;
@@ -79,37 +48,6 @@ export function apply_move(state: GameState, from: number,
     return state;
 }
 
-/**
- * Executes a move from the bar into the board according to Backgammon rules.
- *
- * The function:
- * - Calculates the destination point based on the die value.
- * - Verifies that the current player has stones on the bar.
- * - Validates the bar entry move using is_valid_move_bar().
- * - Handles hitting an opponent blot.
- * - Updates the board and bar counters.
- * 
- * @example
- * apply_move_bar(state, 4)
- * // Enters a stone from the bar using die value 4.
- * 
- * @param state Current GameState
- * @param die Die value used to enter from the bar
- * 
- * @precondition 
- * - state must be a valid GameState.
- * - state.current_player must have at least one stone on the bar.
- * - The destination must be calculated according to Backgammon rules.
- * 
- * @complexity
- * Time: O(1)
- * Space: O(1)
- * 
- * @returns 
- * The updated game state after the bar move is applied.
- * If the move is invalid or no stones are on the bar,
- * the original state is returned unchanged.
- */
 export function apply_move_bar(state: GameState, die: number): GameState {
     const dest = state.current_player === "white"
                  ? die - 1
@@ -135,51 +73,6 @@ export function apply_move_bar(state: GameState, die: number): GameState {
     return state;
 }
 
-/**
- * Executes an entire turn for the current player until all remaining dice
- * have been used or no legal moves exist.
- *
- * The function supports both human input and a bot player.
- * During the turn it repeatedly:
- * - Prints the board and remaining dice.
- * - Checks if the current player has any legal moves; 
- *      if none, the player passes.
- * - If the current player is the bot, 
- *      it chooses a best move sequence and applies it.
- * - If the current player is human, 
- *      it asks for die choice and move origin and applies it.
- *
- * The function consumes dice via check_move(), 
- * and when the dice list becomes empty,the turn ends 
- * (check_move() is responsible for switching player and resetting dice).
- *
- * @example
- * make_move(state)
- * // Runs a full turn for the current player using current dice values.
- *
- * @param state The current game state (mutated in place).
- *
- * @precondition
- * - state must be a valid GameState.
- * - state.dice must not be null when entering the while-loop.
- * - check_move() must correctly validate/apply moves and remove used dice.
- * - choose_best_move_by_order() must return legal 
- *      BotAction sequences for the bot.
- * 
- * @complexity
- * Time: Depends on number of dice (≤ 4) and user/bot logic.
- * - Human branch: bounded by user attempts; 
- *      each validation is O(24) worst-case.
- * - Bot branch: dominated by move-sequence simulation 
- *      in choose_best_move_by_order().
- * Space: O(1) for the game loop itself 
- *      (bot simulation may allocate additional memory).
- *
- * @returns
- * This function does not return a value (void).
- * It updates the GameState directly 
- *      (moves pieces, consumes dice, and may switch player).
- */
 export function make_move(state: GameState): void {
     const bot_player = "black";
     while (state.dice && state.dice.values.length > 0) {

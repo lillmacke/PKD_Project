@@ -1,33 +1,5 @@
 import { GameState, Point, Board } from "./types";
 
-/**
- * Creates the starting board for the backgammon game
- * 
- * The function:
- * - Initializes 24 empty board points.
- * - Places black and white stones in their starting postitions
- * - Sets both bar and borne_off counters to 0
- * - Sets the starting player to "white"
- * - Initializes dice as null
- * 
- * @example 
- * const state = starting_board();
- * console.log(state.board.points);
- * 
- * @param None
- * 
- * @precondition 
- * - Point, Board, and GameState types must be correctly defined.
- * - The board must consist of exactly 24 points (indices 0–23).
- *
- * @complexity 
- * Time: O(1)
- * Space: O(1)
- * 
- * @returns 
- * A fully initialized GameState object representing the standard
- * starting position of a Backgammon game.
- */
 export function starting_board(): GameState {
     const points : Array<Point> = []
     for (let i = 0; i < 24; i++) {
