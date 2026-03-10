@@ -1,6 +1,5 @@
 import { GameState } from "../game_logic/types";
 
-
 /**
  * Creates a copy of a GameState object so that it can be changed without 
  * interfering with the original gamestate. 
