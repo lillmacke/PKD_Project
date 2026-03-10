@@ -50,8 +50,7 @@ test("Checks whether the bot will win the game when given a chance", () => {
   	}
 	expect(game_over(state)).toBe("black");
 });
- 
-//Test 2. Hit a single stone
+//Test 2.
 test("Hit a single white stone", () => {
 	const game_state_2: GameState = {
   		current_player: "black",
@@ -95,7 +94,7 @@ test("Hit a single white stone", () => {
 	expect(state.board.bar.white).toBe(1);
 });
 
-//Test 3. Bot avoids leaving a stone alone
+//Test 3. 
 test("Avoid leaving stone alone", () => {
 	const game_state_3: GameState = {
 		current_player: "black",
@@ -139,7 +138,7 @@ test("Avoid leaving stone alone", () => {
 	expect(state.board.points[6].count).toBeGreaterThanOrEqual(2);
 });
 
-//Test 4 Bot moves stone closer to home
+//Test 4 
 test("Bot moves stone closer to home", () => {
 	const game_state4: GameState = {
 		current_player: "black",
@@ -179,12 +178,12 @@ test("Bot moves stone closer to home", () => {
   	for (const i of moves!) {
     	state = apply_move(state, i.from, i.die);
   	}
-  	// The stone from point 7 should move closer to home (towards index 0)
+  	
  	expect(state.board.points[2].player).toBe("black");
   	expect(state.board.points[2].count).toBeGreaterThan(0);
 });
 
-//Test 5 Bot enters from bar
+//Test 5.
 test("Bot enters from bar when it has a checker on the bar", () => {
 	const game_state_5: GameState = {
   		current_player: "black",
@@ -230,7 +229,7 @@ test("Bot enters from bar when it has a checker on the bar", () => {
 });
 
 
-//Test 6 Bot handles doubles
+//Test 6.
 
 test("Bot uses double correctly", () => {
 	const game_state_6: GameState = {
