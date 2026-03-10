@@ -6,7 +6,6 @@ import { GameState } from "./game_logic/types";
 import { game_over } from "./game_logic/logic_&_checks"
 import { apply_move } from "./game_logic/moves";
 
-
 // The structure for the gamestates is AI-generated. 
 //Test 1. 
 test("Checks whether the bot will win the game when given a chance", () => {
