@@ -29,19 +29,12 @@ if (real_answer === "yes") {
  * @example
  * play_game(starting_board())
  * // Starts a full game of backgammon.
- *
- * @param state The initial GameState to start the game.
- *
- * @precondition
- * - State must be a valid game state.
- *
+ * @param state - The initial GameState to start the game.
+ * @precondition - State must be a valid game state.
  * @complexity
- * Time: O(T), where T is the number of turns played until the game ends.
- * Space: O(1), since the game state is updated in place.
- *
- * @returns
- * Does not return a value.
- * Prints the game result to the console.
+ * - Time: O(T), where T is the number of turns played until the game ends.
+ * - Space: O(1), since the game state is updated in place.
+ * @returns - Does not return a value. Prints the game result to the console.
  */
 export function play_game(state: GameState): void {
     while (game_over(state) === null) {
