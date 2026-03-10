@@ -31,8 +31,8 @@ import { GameState } from "../game_logic/types";
  * 
  * @returns
  * A numeric score:
- * - Positive values favor black.
- * - Negative values favor white.
+ * higher values favor black.
+ * 
  */
 export function evaluation(state: GameState): number {
     let evaluation = 0; 
@@ -71,14 +71,14 @@ export function evaluation(state: GameState): number {
         const point = state.board.points[i];
          if (point.player === "black") {
             //Number of steps left for a stone to be borne off
-            evaluation += point.count;
+            evaluation += 30 * point.count;
             //Point with only one stone
             if (point.count === 1) {
                 evaluation -= 50;
             } else {}
             //Points where black has at least two stones
             if (point.count >= 2) {
-                evaluation +=  50 * point.count;
+                evaluation +=  25 * point.count;
             } else {}
         } else {}
     }    
