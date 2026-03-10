@@ -129,56 +129,7 @@
 <a name='L64'></a><a href='#L64'>64</a>
 <a name='L65'></a><a href='#L65'>65</a>
 <a name='L66'></a><a href='#L66'>66</a>
-<a name='L67'></a><a href='#L67'>67</a>
-<a name='L68'></a><a href='#L68'>68</a>
-<a name='L69'></a><a href='#L69'>69</a>
-<a name='L70'></a><a href='#L70'>70</a>
-<a name='L71'></a><a href='#L71'>71</a>
-<a name='L72'></a><a href='#L72'>72</a>
-<a name='L73'></a><a href='#L73'>73</a>
-<a name='L74'></a><a href='#L74'>74</a>
-<a name='L75'></a><a href='#L75'>75</a>
-<a name='L76'></a><a href='#L76'>76</a>
-<a name='L77'></a><a href='#L77'>77</a>
-<a name='L78'></a><a href='#L78'>78</a>
-<a name='L79'></a><a href='#L79'>79</a>
-<a name='L80'></a><a href='#L80'>80</a>
-<a name='L81'></a><a href='#L81'>81</a>
-<a name='L82'></a><a href='#L82'>82</a>
-<a name='L83'></a><a href='#L83'>83</a>
-<a name='L84'></a><a href='#L84'>84</a>
-<a name='L85'></a><a href='#L85'>85</a>
-<a name='L86'></a><a href='#L86'>86</a>
-<a name='L87'></a><a href='#L87'>87</a>
-<a name='L88'></a><a href='#L88'>88</a>
-<a name='L89'></a><a href='#L89'>89</a>
-<a name='L90'></a><a href='#L90'>90</a>
-<a name='L91'></a><a href='#L91'>91</a>
-<a name='L92'></a><a href='#L92'>92</a>
-<a name='L93'></a><a href='#L93'>93</a>
-<a name='L94'></a><a href='#L94'>94</a>
-<a name='L95'></a><a href='#L95'>95</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L67'></a><a href='#L67'>67</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -197,7 +148,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">47x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">47x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">47x</span>
@@ -211,8 +161,6 @@
 <span class="cline-any cline-yes">282x</span>
 <span class="cline-any cline-yes">282x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -246,104 +194,72 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">47x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { pid } from "node:process";
-import {
-    GameState
- } from "../game_logic/types";
+import { GameState } from "../game_logic/types";
 &nbsp;
 /**
- * Evaluates a given game state and returns a heuristic score from
- * the perspective of the black player.
- *
- * A higher score means the position is better for black,
- * while a lower score means the position is better for white.
- *
- * The evaluation considers:
+ * Evaluate takes a gamestate and checks following things:
  * - Stones borne off
  * - Distance remaining to bear off
  * - Single stones are penalized
  * - Made points (positions with ≥2 stones that block the opponent)
  *
- * @example
- * evaluation(state)
- * // Returns a number representing how favorable the position is for black.
- *
- * @param state The current game state to evaluate.
- *
- * @precondition
- * - state must be a valid GameState.
- * - The board must contain exactly 24 points.
- * - Stone counts and player ownership must be consistent.
- *
- * @complexity
- * Time: O(n), where n = 24 board points.
- * Space: O(1)
- * 
- * @returns
- * A numeric score:
- * - Positive values favor black.
- * - Negative values favor white.
+ * @example - A gamestate with one black in the home and on white unguarded will
+ * give the number -20. 
+ * @param state - The current game state to evaluate.
+ * @precondition - state must be a valid GameState.
+ * @complexity - O(n). 
+ * @returns - A number, higher values favor black.
  */
 export function evaluation(state: GameState): number {
     let evaluation = 0; 
-&nbsp;
     evaluation += state.board.borne_off.black * 35; 
     
-    for (let i = 0; i &lt; 18; i++){
+    for (let i = 0; i &lt; 18; i++) {
         const point = state.board.points[i];
-        if (point.player === "white" &amp;&amp; point.count === 1){
+        if (point.player === "white" &amp;&amp; point.count === 1) {
             evaluation -= i + 6;
-        }
+        } else {}
     }
 &nbsp;
-    for (let i = 18; i &lt; 24; i++){
+    for (let i = 18; i &lt; 24; i++) {
         const point = state.board.points[i];
-        <span class="missing-if-branch" title="if path not taken" >I</span>if (point.player === "white" &amp;&amp; point.count === 1){
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (point.player === "white" &amp;&amp; point.count === 1) {
 <span class="cstat-no" title="statement not covered" >            evaluation -= 50;</span>
-        }
+        } else {}
     }
-    
-   
 &nbsp;
-    for (let i = 6; i &lt; 24; i++){
+    for (let i = 6; i &lt; 24; i++) {
         const point = state.board.points[i];
         if (point.player === "black") {
-            // Antal steg kvar för en sten att kunna bli borne off
-            evaluation -= (i + 1) * point.count
-            // Sten som står själv
+            //Number of steps left for a stone to be borne off
+            evaluation += (30 - i) * point.count;
+            //Point with only one stone
             if (point.count === 1) {
                 evaluation -= (30 - i);
             } else {}
-            //Points där svarta har minst 2 stenar
+            //Points where black has at least two stones
             if (point.count &gt;= 2) {
                 evaluation += (30- i) * point.count;
-            }
-        }
+            } else {}
+        } else {}
     }
-    for( let i = 0; i &lt; 6; i++ ){
+    for (let i = 0; i &lt; 6; i++) {
         const point = state.board.points[i];
          if (point.player === "black") {
-            // Antal steg kvar för en sten att kunna bli borne off
-            evaluation += point.count
-            // Sten som står själv
+            //Number of steps left for a stone to be borne off
+            evaluation += 30 * point.count;
+            //Point with only one stone
             if (point.count === 1) {
                 evaluation -= 50;
             } else {}
-            //Points där svarta har minst 2 stenar
+            //Points where black has at least two stones
             if (point.count &gt;= 2) {
-                evaluation +=  50 * point.count;
-            }
-        }
-    }
-&nbsp;
-    
-&nbsp;
-    
+                evaluation +=  25 * point.count;
+            } else {}
+        } else {}
+    }    
     return evaluation;
 }</pre></td></tr></table></pre>
 
@@ -352,7 +268,7 @@ export function evaluation(state: GameState): number {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-07T18:19:21.635Z
+                at 2026-03-10T16:45:38.007Z
             </div>
         <script src="../prettify.js"></script>
         <script>

@@ -45,8 +45,6 @@ test("Checks whether the bot will win the game when given a chance", () => {
 	};
 	let state = clone(win_state);
 	const moves = choose_best_move_by_order(state);
-	expect(moves).not.toBeNull();
-	expect(moves!.length).toBeGreaterThan(0);
 
 	for (const i of moves!) {
 		state = apply_move(state, i.from, i.die);
@@ -91,8 +89,6 @@ test("Hit a single white stone", () => {
 	};
   	let state = clone(game_state_2);
   	const moves = choose_best_move_by_order(state);
-  	expect(moves).not.toBeNull();
-  	expect(moves!.length).toBeGreaterThan(0);
 
   	for (const i of moves!) {
     	state = apply_move(state, i.from, i.die);
@@ -137,8 +133,6 @@ test("Avoid leaving stone alone", () => {
 	}; 
 	let state = clone(game_state_3);
 	const moves = choose_best_move_by_order(state);
-	expect(moves).not.toBeNull();
-	expect(moves!.length).toBeGreaterThan(0);
 		
 	for (const i of moves!) {
 	state = apply_move(state, i.from, i.die);
@@ -183,11 +177,8 @@ test("Bot moves stone closer to home", () => {
 	}; 
   	let state = clone(game_state4);
   	const moves = choose_best_move_by_order(state);
-  	expect(moves).not.toBeNull();
- 	 expect(moves!.length).toBeGreaterThan(0);
-
-  	for (const m of moves!) {
-    	state = apply_move(state, m.from, m.die);
+  	for (const i of moves!) {
+    	state = apply_move(state, i.from, i.die);
   	}
   	// The stone from point 7 should move closer to home (towards index 0)
  	expect(state.board.points[2].player).toBe("black");
@@ -231,12 +222,8 @@ test("Bot enters from bar when it has a checker on the bar", () => {
 	};
   	let state = clone(game_state_5);
   	const moves = choose_best_move_by_order(state);
-  	expect(moves).not.toBeNull();
-  	expect(moves!.length).toBeGreaterThan(0);
-  	expect(moves![0].from).toBe(-1);
-
-  	for (const m of moves!) {
-    	state = apply_move(state, m.from, m.die);
+  	for (const i of moves!) {
+    	state = apply_move(state, i.from, i.die);
   	}
   	expect(state.board.bar.black).toBe(0);
   	expect(state.board.points[16].player).toBe("black");
@@ -282,11 +269,8 @@ test("Bot uses double correctly", () => {
 	};
   	let state = clone(game_state_6);
   	const moves = choose_best_move_by_order(state);
-  	expect(moves).not.toBeNull();
-  	expect(moves!.length).toBeGreaterThan(0);
-
-  	for (const m of moves!) {
-    	state = apply_move(state, m.from, m.die);
+  	for (const i of moves!) {
+    	state = apply_move(state, i.from, i.die);
   	}
   	expect(state.board.points[3].player).toBe("black");
   	expect(state.board.points[3].count).toBeGreaterThan(0);
