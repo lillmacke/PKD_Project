@@ -156,7 +156,7 @@ export function choose_best_move_by_order(
 
     const dice = die.values.slice();
 
-    //If only 1 dice (or more than 2), gå to handling single die
+    //If only 1 dice (or more than 2), go to handling single die
     if (dice.length === 1 || dice.length > 2) {
         const seq = sim_seq_order(state, dice);
         if (seq.length === 0) {
